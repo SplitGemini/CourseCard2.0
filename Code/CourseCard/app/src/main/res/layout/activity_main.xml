@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/linearLayout">
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout">
 
         <EditText
             android:id="@+id/editText2"
@@ -42,37 +42,38 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="382dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/recyclerView"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/imageButton_forum"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
-            android:background="@android:color/background_light"
+            android:background="@android:color/darker_gray"
             android:contentDescription="论坛"
             app:srcCompat="@drawable/icons8_user_account_32" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageButton_course"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@android:color/background_light"
+            android:onClick="skipCourse"
             app:srcCompat="@drawable/icons8_timetable_32" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
+            android:id="@+id/imageButton_me"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_weight="1"
             android:background="@android:color/background_light"
+            android:onClick="skipAboutMe"
             app:srcCompat="@drawable/icons8_user_32" />
 
     </LinearLayout>
