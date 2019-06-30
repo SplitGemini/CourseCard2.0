@@ -1,7 +1,7 @@
 # 关于项目
 
 
-- [1、项目简介](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about#1项目简介)
+- [1、项目简介](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md#1项目简介)
 - [2、重要分析设计文档](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md#2重要分析设计文档)
 - [3、敏捷开发迭代管理与大事纪](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md#3敏捷开发迭代管理与大事纪)
 
@@ -18,10 +18,10 @@
 请在这里给出重要的软件分析与设计文档连接
 
 
-- [需求规格说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/06-Requirement-specification)
-- [软件设计说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/07-Design)
-- [产品演示视频](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about)
-- [项目愿景](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/04-vision)
+- [需求规格说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/06-Requirement-specification.md)
+- [软件设计说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/07-Design.md)
+- [产品演示视频](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md)
+- [项目愿景](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/04-vision.md)
 
 
 ## 3、敏捷开发迭代管理与大事纪
