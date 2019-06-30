@@ -24,11 +24,11 @@
 
 |   学号   |  昵称  |                Github                 |       岗位角色        |
 | :------: | :----: | :-----------------------------------: | :-------------------: |
-| 16340066 |  郭弘  |                                       |    [SplitGemini](https://github.com/SplitGemini)  | 产品经理、java工程师
-| 16340068 | 韩俊柠 |                                    |  [nelson-hjn](https://github.com/nelson-hjn) | 客户经理、UI/UX设计
+| 16340066 |  郭弘  |  [SplitGemini](https://github.com/SplitGemini)  |   产品经理、java工程师 |
+| 16340068 | 韩俊柠 |  [nelson-hjn](https://github.com/nelson-hjn)    |   客户经理、UI/UX设计 |
 | 16340065 |  谷田  | [gutian3](https://github.com/gutian3) |  技术经理、js工程师   |
-| 16340062 | 巩文骏 | [gongwj7](https://github.com/gongwj7)                                      |                       |QA 工程师、数据库DBA
-| 16340056 |  冯扬  |  [cmlapple](https://github.com/cmlapple)                                     |                       |项目经理、架构师（技术经理）
+| 16340062 | 巩文骏 | [gongwj7](https://github.com/gongwj7)       |         QA 工程师、数据库DBA              |
+| 16340056 |  冯扬  |  [cmlapple](https://github.com/cmlapple)        |       项目经理、架构师（技术经理）                |
 
 
 
