@@ -1,8 +1,9 @@
 # 初级产品特征库
 
 
-- [1、编写目的与指南](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/05-product-backlog#1编写目的与指南)
+- [1、编写目的与指南](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/05-product-backlog.md#1编写目的与指南)
 - Reference: [硝烟中的Scrum和XP](http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches)
+
 | 版本 |   日期    |           描述           |     作者     |
 | :--: | :-------: | :----------------------: | :----------: |
 | v1.1 | 2019-7-1 | 描述产品特征 | 谷田、郭弘 |
