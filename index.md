@@ -34,5 +34,5 @@
   - 9.1 [短视频](dashboard/assets/video.mp4)
 - X1 [meeting-records](dashboard/meeting1.md)
 - X2 Final Report
-  - 学号-title
+  - [16340068_韩俊柠](dashboard/16340068.md)
   - [小组分工与贡献率说明](dashboard/小组分工与贡献率说明.md)
