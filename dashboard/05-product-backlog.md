@@ -1,10 +1,12 @@
 # 初级产品特征库
 
-- [1、编写目的与指南](https://sysu-swsad.github.io/dashboard/05-backlog#1编写目的与指南)
 
+- [1、编写目的与指南](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/05-product-backlog#1编写目的与指南)
+- Reference: [硝烟中的Scrum和XP](http://www.infoq.com/cn/minibooks/scrum-xp-from-the-trenches)
 | 版本 |   日期    |           描述           |     作者     |
 | :--: | :-------: | :----------------------: | :----------: |
-| v1.1 | 2019-2-16 | 仅根据第一版用例模型构建 | handsome-boy |
+| v1.1 | 2019-7-1 | 描述产品特征 | 谷田、郭弘 |
+
 
 ## 1、编写目的与指南
 
