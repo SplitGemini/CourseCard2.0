@@ -1,8 +1,10 @@
 # 关于项目
 
+
 - [1、项目简介](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about#1项目简介)
 - [2、重要分析设计文档](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md#2重要分析设计文档)
 - [3、敏捷开发迭代管理与大事纪](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about.md#3敏捷开发迭代管理与大事纪)
+
 
 ## 1、项目简介
 
@@ -15,10 +17,12 @@
 
 请在这里给出重要的软件分析与设计文档连接
 
+
 - [需求规格说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/06-Requirement-specification)
 - [软件设计说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/07-Design)
 - [产品演示视频](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/01-about)
 - [项目愿景](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/04-vision)
+
 
 ## 3、敏捷开发迭代管理与大事纪
 
@@ -29,6 +33,7 @@
 - 测试与 DevOps 任务，包括各类开发规范组织、开发与测试环境与工具、CI/CD 实施
 - 技术学习或其他任务。
 
+
 - Inceptions
   - goal: 就产品“产品范围、愿景和核心业务”达成一致
   - 前期工作：冯扬
@@ -38,12 +43,13 @@
   - 项目愿景等文档： 巩文俊
   - 业务故事板设计: 谷田
 - Iteration 1 (2019-5.1 to 2019.7.1)
+
   - goals:
     - makes tech prototype for something
     - builds a proto system to demostrate core scene
     - collects 50% requirments scene stories
   - milestones
-    - 
+
 - Iteration 2 (3 weeks from yy.mm.dd to yy.mm.dd)
   - goals:
     - …
