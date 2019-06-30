@@ -8,7 +8,7 @@
 
   
 
-- 1、[About](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/01-about)（项目概况）
+- 1、[About](dashboard/01-about.md)（项目概况）
 - 2、[Team profile](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/02-team-profile)（团队组建与分工）
 - 3、[Investigation](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/03-investigation)（项目前期调研/竞品分析）
 - 4、[Vision](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/04-vision)（项目愿景）
