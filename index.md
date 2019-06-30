@@ -19,7 +19,7 @@
   - 6.3 Domian Models（领域模型）
   - 6.4 State Models（状态模型）
   - 6.5 System Sequence Diagrams（功能模型）
-  - [UI_design](dashboard/Requirementspecification.pdf)
+  - [模型图](dashboard/Requirementspecification.pdf)
 - 7、Design（设计说明书）
   - 7.1 [UI_design](dashboard/UI_design.md)
   - 7.2 [Database_design](dashboard/database_design.md)
