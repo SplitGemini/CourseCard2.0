@@ -29,15 +29,10 @@
   - 8.2 REST API 设计规范
   - 8.3 架构设计、详细设计（BCE方法）到应用程序框架映射指南
   - 8.4 部署说明
+  - [生产规范与指南](dashboard/生产规范与指南.doc)
 - 9、成品展示
-  - 9.1 XX短视频
-  - 9.2 XX短视频
-- X1 meeting-records
-  - inception meeting (yy/mm/dd)
-- X2 [KANBAN](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/X2-kanban)
-- X3 [auditing-records](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/x3-auditing)
-- X4 Tech/Work Report
-  - 学号-title
-- X5 Final Report
-  - 学号-title
-  - 小组分工与贡献率说明
+  - 9.1 [短视频](dashboard/assets/video.mp4)
+- X1 [meeting-records](dashboard/meeting1.md)
+- X2 Final Report
+  - [16340068_韩俊柠](dashboard/16340068.md)
+  - [小组分工与贡献率说明](dashboard/小组分工与贡献率说明.md)
