@@ -34,5 +34,9 @@
   - 9.1 [短视频](dashboard/assets/video.mp4)
 - X1 [meeting-records](dashboard/meeting1.md)
 - X2 Final Report
-  - [16340068_韩俊柠](dashboard/16340068.md)
+  - [16340068_韩俊柠](dashboard/finalReport/16340068.md)
+  - [16340062_巩文骏](dashboard/finalReport/16340062.md)
+  - [16340065_谷田](dashboard/finalReport/16340065.md)
+  - [16340066_郭弘](dashboard/finalReport/16340066.md)
+  - [16340060_冯扬](dashboard/finalReport/16340060.md)
   - [小组分工与贡献率说明](dashboard/小组分工与贡献率说明.md)
