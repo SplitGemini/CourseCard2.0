@@ -18,7 +18,7 @@
 请在这里给出重要的软件分析与设计文档连接
 
 
-- [需求规格说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/Requirementspecification.md)
+- [需求规格说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/Requirementspecification.pdf)
 - [软件设计说明书](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/API_Design.md)
 - [产品演示视频](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/assets/video.mp4)
 - [项目愿景](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/04-vision.md)
