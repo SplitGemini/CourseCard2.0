@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">CourseCard</string>
+
+    <string name="item_course_name_default">计算机视觉</string>
+    <string name="item_course_time_default">10:00 - 11:40</string>
+    <string name="item_course_place_default">B104</string>
+
+    <string name="item_course_time1">8:00-9:40</string>
+    <string name="item_course_time2">10:00-11:40</string>
+    <string name="item_course_time3">14:20-16:00</string>
+    <string name="item_course_time4">16:20-18:00</string>
+    <string name="item_course_time5">19:00-20:40</string>
+    <string name="item_course_time6">19:00-21:35</string>
+
+    <string name="header_weekday_default">星期一</string>
+    <string name="activity_info_name_default">计算机视觉</string>
+    <string name="activity_info_teacher_default">曾坤</string>
+    <string name="activity_info_place_default">东B104</string>
+    <string name="activity_info_time_default">周一 8:00-9:40</string>
+    <string name="activity_info_week_default">1-18周</string>
+    <string name="activity_info_note_hint">备注</string>
+
+    <string name="gumball_jianshi">Excalibur!!!</string>
+    <string name="gumball_guaidao">时刻保持游刃有余的优雅</string>
+    <string name="gumball_shangren">Nice to meet you</string>
+    <string name="gumball_maoxianzhe">你好啊，旅行者</string>
+    <string name="gumball_xiaomei">请问你见过一只蓝色的冈布奥吗？</string>
+
+    <string name="activity_list_btn">添加</string>
+
+    <string name="item_schedule_name_default">2018 第一学期</string>
+
+    <string-array name="weekday_ch_zn">
+        <item>星期一</item>
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+        <item>星期日</item>
+    </string-array>
+</resources>

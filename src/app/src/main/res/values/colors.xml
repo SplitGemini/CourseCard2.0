@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="item_course_cv_bg1">#AB3B3A</color>
+    <color name="item_course_cv_bg2">#CA7A2C</color>
+    <color name="item_course_cv_bg3">#268785</color>
+    <color name="item_course_cv_bg4">#177cb0</color>
+    <color name="item_course_cv_bg5">#66327C</color>
+    <color name="item_course_cv_bg6">#66327C</color>
+
+    <color name="item_course_name_font">#FFFFFF</color>
+    <color name="item_course_time_font">#FFFFFF</color>
+    <color name="item_course_place_font">#FFFFFF</color>
+    <color name="item_course_cv_bg_default">#177cb0</color>
+
+    <color name="header_bg">#802EA9DF</color>
+    <color name="header_weekday_font">#FFFFFF</color>
+
+    <color name="activity_info_cv_bg_default">#177cb0</color>
+    <color name="activity_info_name_font">#FFFFFF</color>
+    <color name="activity_info_teacher_font">#FFFFFF</color>
+    <color name="activity_info_place_font">#FFFFFF</color>
+    <color name="activity_info_time_font">#FFFFFF</color>
+    <color name="activity_info_week_font">#FFFFFF</color>
+    <color name="activity_info_note_hint_font">#FFFFFF</color>
+    <color name="activity_info_note_font">#FFFFFF</color>
+
+    <color name="spinner_bg">#303F9F</color>
+    <color name="spinner_font">#FFFFFF</color>
+
+    <color name="activity_list_btn_bg">#005CAF</color>
+    <color name="activity_list_btn_font">#FFFFFF</color>
+
+    <color name="item_schedule_cv">#58B2DC</color>
+    <color name="item_schedule_name_font">#FFFFFF</color>
+
+    <color name="toasty_err">#91989F</color>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_list_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/activity_list_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/activity_list_btn">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/activity_list_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/activity_list_btn_bg"
+        android:text="@string/activity_list_btn"
+        android:textSize="@dimen/activity_list_btn_font"
+        android:textColor="@color/activity_list_btn_font"
+        android:layout_margin="@dimen/activity_list_btn_margin"
+        android:background="@drawable/btn_bg"/>
+
+</RelativeLayout>

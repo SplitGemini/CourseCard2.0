@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView android:id="@+id/item_course_cardView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/item_course_cv_margin"
+    app:cardCornerRadius="@dimen/item_course_cv_radius"
+    app:contentPadding="@dimen/item_course_cv_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/item_course_weekday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="@string/header_weekday_default"
+                android:textColor="@color/header_weekday_font"
+                android:textSize="@dimen/header_weekday_font" />
+
+            <TextView
+                android:id="@+id/item_course_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/item_course_name_font"
+                android:textSize="@dimen/item_course_name_font"
+                android:text="@string/item_course_name_default"/>
+
+            <TextView
+                android:id="@+id/item_course_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/item_course_name"
+                android:textColor="@color/item_course_time_font"
+                android:textSize="@dimen/item_course_time_font"
+                android:text="@string/item_course_time_default" />
+
+            <TextView
+                android:id="@+id/item_course_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/item_course_time"
+                android:textColor="@color/item_course_place_font"
+                android:textSize="@dimen/item_course_place_font"
+                android:text="@string/item_course_place_default" />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
