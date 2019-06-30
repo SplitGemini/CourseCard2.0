@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_course_cv_margin">10dp</dimen>
+    <dimen name="item_course_cv_radius">10dp</dimen>
+    <dimen name="item_course_cv_padding">10dp</dimen>
+    <dimen name="item_course_name_font">24sp</dimen>
+    <dimen name="item_course_time_font">20sp</dimen>
+    <dimen name="item_course_place_font">20sp</dimen>
+
+    <dimen name="header_weekday_font">32sp</dimen>
+
+    <dimen name="activity_info_cv_margin">10dp</dimen>
+    <dimen name="activity_info_cv_radius">10dp</dimen>
+    <dimen name="activity_info_cv_padding">10dp</dimen>
+
+    <dimen name="activity_info_name_font">28sp</dimen>
+    <dimen name="activity_info_teacher_font">24sp</dimen>
+    <dimen name="activity_info_place_font">24sp</dimen>
+    <dimen name="activity_info_time_font">24sp</dimen>
+    <dimen name="activity_info_week_font">24sp</dimen>
+    <dimen name="activity_info_note_hint_font">24sp</dimen>
+    <dimen name="activity_info_note_font">24sp</dimen>
+
+    <dimen name="activity_info_iv_teacher_size">32dp</dimen>
+    <dimen name="activity_info_iv_place_size">32dp</dimen>
+    <dimen name="activity_info_iv_time_size">32dp</dimen>
+    <dimen name="activity_info_iv_week_size">32dp</dimen>
+    <dimen name="activity_info_iv_note_size">32dp</dimen>
+    <dimen name="activity_info_margin">20dp</dimen>
+    <dimen name="activity_info_margin_small">10dp</dimen>
+    <dimen name="activity_info_margin_big">40dp</dimen>
+
+    <dimen name="spinner_font">24sp</dimen>
+    <dimen name="spinner_margin">10dp</dimen>
+    <dimen name="activity_main_iv_back_margin">10dp</dimen>
+    <dimen name="activity_main_iv_add_margin">10dp</dimen>
+    <dimen name="activity_main_iv_back_size">32dp</dimen>
+    <dimen name="activity_main_iv_add_size">32dp</dimen>
+
+    <dimen name="activity_list_btn_font">24sp</dimen>
+    <dimen name="activity_list_btn_margin">10dp</dimen>
+    <dimen name="activity_list_btn_radius">10dp</dimen>
+
+    <dimen name="item_schedule_cv_margin">10dp</dimen>
+    <dimen name="item_schedule_cv_radius">10dp</dimen>
+    <dimen name="item_schedule_cv_padding">10dp</dimen>
+    <dimen name="item_schedule_name_font">20sp</dimen>
+    <dimen name="item_schedule_img_margin">10dp</dimen>
+    <dimen name="item_schedule_img_margin_small">5dp</dimen>
+</resources>

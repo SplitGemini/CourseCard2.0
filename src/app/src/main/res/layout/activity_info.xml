@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_info_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/activity_info_cv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:layout_margin="@dimen/activity_info_cv_margin"
+        app:cardCornerRadius="@dimen/activity_info_cv_radius"
+        app:contentPadding="@dimen/activity_info_cv_padding">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/activity_info_margin">
+
+            <TextView
+                android:id="@+id/activity_info_tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_info_name_default"
+                android:textColor="@color/activity_info_name_font"
+                android:textSize="@dimen/activity_info_name_font" />
+            <ImageView
+                android:id="@+id/activity_info_iv_teacher"
+                android:layout_width="@dimen/activity_info_iv_teacher_size"
+                android:layout_height="@dimen/activity_info_iv_teacher_size"
+                android:layout_marginTop="@dimen/activity_info_margin_small"
+                android:layout_below="@id/activity_info_tv_name"
+                app:srcCompat="@drawable/teacher"/>
+            <TextView
+                android:id="@+id/activity_info_tv_teacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/activity_info_iv_teacher"
+                android:layout_toEndOf="@+id/activity_info_iv_teacher"
+                android:layout_toRightOf="@id/activity_info_iv_teacher"
+                android:layout_marginLeft="@dimen/activity_info_margin_small"
+                android:text="@string/activity_info_teacher_default"
+                android:textColor="@color/activity_info_teacher_font"
+                android:textSize="@dimen/activity_info_teacher_font" />
+            <ImageView
+                android:id="@+id/activity_info_iv_place"
+                android:layout_width="@dimen/activity_info_iv_place_size"
+                android:layout_height="@dimen/activity_info_iv_place_size"
+                android:layout_marginTop="@dimen/activity_info_margin_small"
+                android:layout_below="@id/activity_info_tv_teacher"
+                app:srcCompat="@drawable/place"/>
+            <TextView
+                android:id="@+id/activity_info_tv_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/activity_info_iv_place"
+                android:layout_toEndOf="@+id/activity_info_iv_place"
+                android:layout_toRightOf="@id/activity_info_iv_place"
+                android:layout_marginLeft="@dimen/activity_info_margin_small"
+                android:text="@string/activity_info_place_default"
+                android:textColor="@color/activity_info_place_font"
+                android:textSize="@dimen/activity_info_place_font" />
+            <ImageView
+                android:id="@+id/activity_info_iv_time"
+                android:layout_width="@dimen/activity_info_iv_time_size"
+                android:layout_height="@dimen/activity_info_iv_time_size"
+                android:layout_marginTop="@dimen/activity_info_margin_small"
+                android:layout_below="@id/activity_info_tv_place"
+                app:srcCompat="@drawable/time"/>
+            <TextView
+                android:id="@+id/activity_info_tv_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/activity_info_iv_time"
+                android:layout_toEndOf="@+id/activity_info_iv_time"
+                android:layout_toRightOf="@id/activity_info_iv_time"
+                android:layout_marginLeft="@dimen/activity_info_margin_small"
+                android:text="@string/activity_info_time_default"
+                android:textColor="@color/activity_info_time_font"
+                android:textSize="@dimen/activity_info_time_font" />
+            <ImageView
+                android:id="@+id/activity_info_iv_week"
+                android:layout_width="@dimen/activity_info_iv_week_size"
+                android:layout_height="@dimen/activity_info_iv_week_size"
+                android:layout_marginTop="@dimen/activity_info_margin_small"
+                android:layout_below="@id/activity_info_tv_time"
+                app:srcCompat="@drawable/week"/>
+            <TextView
+                android:id="@+id/activity_info_tv_week"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/activity_info_iv_week"
+                android:layout_toEndOf="@+id/activity_info_iv_week"
+                android:layout_toRightOf="@id/activity_info_iv_week"
+                android:layout_marginLeft="@dimen/activity_info_margin_small"
+                android:text="@string/activity_info_week_default"
+                android:textColor="@color/activity_info_week_font"
+                android:textSize="@dimen/activity_info_week_font" />
+            <ImageView
+                android:id="@+id/activity_info_iv_note"
+                android:layout_width="@dimen/activity_info_iv_note_size"
+                android:layout_height="@dimen/activity_info_iv_note_size"
+                android:layout_marginTop="@dimen/activity_info_margin_big"
+                android:layout_below="@id/activity_info_tv_week"
+                app:srcCompat="@drawable/note"/>
+            <TextView
+                android:id="@+id/activity_info_tv_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/activity_info_iv_note"
+                android:layout_toEndOf="@+id/activity_info_iv_note"
+                android:layout_toRightOf="@id/activity_info_iv_note"
+                android:layout_marginLeft="@dimen/activity_info_margin_small"
+                android:text="@string/activity_info_note_hint"
+                android:textColor="@color/activity_info_note_hint_font"
+                android:textSize="@dimen/activity_info_note_hint_font" />
+            <EditText
+                android:id="@+id/activity_info_edt_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/activity_info_tv_note"
+                android:textColor="@color/activity_info_note_font"
+                android:textSize="@dimen/activity_info_note_font" />
+            <ImageView
+                android:id="@+id/iv_gumball"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_below="@id/activity_info_tv_note"
+                android:layout_marginTop="@dimen/activity_info_margin_big"
+                android:layout_centerHorizontal="true"
+                android:alpha="0.5"
+                app:srcCompat="@drawable/maoxianzhe" />
+
+        </RelativeLayout>
+
+
+    </android.support.v7.widget.CardView>
+
+</RelativeLayout>
