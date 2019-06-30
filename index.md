@@ -40,4 +40,4 @@
   - 学号-title
 - X5 Final Report
   - 学号-title
-  - 小组分工与贡献率说明
+  - [小组分工与贡献率说明](dashboard/小组分工与贡献率说明.md)
