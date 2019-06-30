@@ -22,8 +22,8 @@
   - 6.6 Supplementary Requirements（补充需求）
 - 7、Design（设计说明书）
   - 7.1 [UI_design](dashboard/UI_design.md)
-  - 7.2 [Database_design](dashboard/UI_design.md)
-  - 7.3 [API_design](dashboard/UI_design.md)
+  - 7.2 [Database_design](dashboard/database_design.md)
+  - 7.3 [API_design](dashboard/API_design.md)
 - 8、生产规范与指南
   - 8.1 XX 代码规范
   - 8.2 REST API 设计规范
