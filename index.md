@@ -9,10 +9,10 @@
   
 
 - 1、[About](dashboard/01-about.md)（项目概况）
-- 2、[Team profile](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/02-team-profile)（团队组建与分工）
-- 3、[Investigation](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/03-investigation)（项目前期调研/竞品分析）
-- 4、[Vision](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/04-vision)（项目愿景）
-- 5、[Product Backlog](https://sysu-coursecard.github.io/Coursecard2.0/dashboard/05-product-backlog) （产品特性库）
+- 2、[Team profile](dashboard/02-team-profile.md)（团队组建与分工）
+- 3、[Investigation](dashboard/03-investigation.md)（项目前期调研/竞品分析）
+- 4、[Vision](dashboard/04-vision.md)（项目愿景）
+- 5、[Product Backlog](dashboard/05-product-backlog.md) （产品特性库）
 - 6、[Requirement specification](https://sysu-coursecard.github.io/Coursecard2.0dashboard/06-requirement-specification)（需求规格说明书）
   - 6.1 Usecase Diagram and UML Activity Diagram（用例图，业务过程/多泳道图）
   - 6.2 Use Cases（用例+活动图）
