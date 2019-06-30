@@ -1,8 +1,8 @@
 # 团队与分工
 
 
-- [1、团队故事](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/02-team-profile#1团队故事)
-- [2、团队分工](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/02-team-profile#2团队分工)
+- [1、团队故事](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/02-team-profile.md#1团队故事)
+- [2、团队分工](https://github.com/sysu-coursecard/Coursecard2.0/blob/master/dashboard/02-team-profile.md#2团队分工)
 
 | 版本 |   日期    | 描述 |     作者     |
 | :--: | :-------: | :--: | :----------: |
@@ -12,8 +12,8 @@
 
 一个5人小队
 
-- [1、团队故事](https://sysu-swsad.github.io/dashboard/02-team-profile#1团队故事)
-- [2、团队分工](https://sysu-swsad.github.io/dashboard/02-team-profile#2团队分工)
+- [1、团队故事](https://sysu-swsad.github.io/dashboard/02-team-profile.md#1团队故事)
+- [2、团队分工](https://sysu-swsad.github.io/dashboard/02-team-profile.md#2团队分工)
 
 | 版本 |   日期    | 描述 |     作者     |
 | :--: | :-------: | :--: | :----------: |
