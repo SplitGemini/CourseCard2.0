@@ -28,7 +28,7 @@
 | 16340068 | 韩俊柠 |  [nelson-hjn](https://github.com/nelson-hjn)    |   UI/UX设计与会议记录 |
 | 16340065 |  谷田  | [gutian3](https://github.com/gutian3) |  UI设计以及部分文档完成   |
 | 16340062 | 巩文骏 | [gongwj7](https://github.com/gongwj7)       |        逻辑设计与画图              |
-| 16340056 |  冯扬  |  [cmlapple](https://github.com/cmlapple)        |       数据库构建与设计               |
+| 16340060 |  冯扬  |  [cmlapple](https://github.com/cmlapple)        |       数据库构建与设计               |
 
 
 
