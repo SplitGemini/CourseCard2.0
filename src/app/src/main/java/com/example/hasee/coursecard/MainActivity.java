@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
   private NotificationManager notificationManager;
   private int year,month,day,hour,minute,second,week,mToPosition;
   private Boolean mShouldScroll = true;
-  private String academicYear = "2018-1";
+  private String academicYear = "2019-1";
   private List<Course> Mcourse;
   private Boolean tag = true;
   @Override
@@ -514,7 +514,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences userSettings = getSharedPreferences("setting", 0);
         SharedPreferences.Editor editor = userSettings.edit();
         editor.putString("academic",academicYear);
-        editor.commit();
+        //editor.commit();
+        editor.apply();
     }
     queryInfoFromDB4uiChange(1,academicYear);
     if (adapter.getItemCount() == 0) {

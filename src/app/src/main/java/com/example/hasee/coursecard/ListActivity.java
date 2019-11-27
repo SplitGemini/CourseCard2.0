@@ -44,7 +44,7 @@ public class ListActivity extends AppCompatActivity {
   private Button btn;
   private OptionsPickerView pvOptions;
   private String name;
-  private String academicYear = "2018-1";
+  private String academicYear = "2019-1";
   private Schedule temp;
   private List<DBCourse> courses = new ArrayList<>();
   

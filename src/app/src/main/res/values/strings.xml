@@ -25,7 +25,8 @@
     <string name="gumball_shangren">Nice to meet you</string>
     <string name="gumball_maoxianzhe">你好啊，旅行者</string>
     <string name="gumball_xiaomei">请问你见过一只蓝色的冈布奥吗？</string>
-
+    <string name="appbar_right_info">选择周</string>
+    <string name="appbar_left_info">菜单</string>
     <string name="activity_list_btn">添加</string>
 
     <string name="item_schedule_name_default">2018 第一学期</string>

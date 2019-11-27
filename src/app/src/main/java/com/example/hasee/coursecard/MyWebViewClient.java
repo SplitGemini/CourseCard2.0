@@ -64,7 +64,7 @@ public class MyWebViewClient extends WebViewClient {
         Common.cookie = CookieStr;
         if(CookieStr.contains("LYSESSIONID") && CookieStr.contains("user")) {
             Log.d("msg", CookieStr);
-            String[] weeklys = {"1,10", "11,18"};
+            String[] weeklys = {"1,9","10","11,19","20"};
             for (String i: weeklys)
                 Onclick4Data(i,Common.academic);
         }
@@ -102,9 +102,9 @@ public class MyWebViewClient extends WebViewClient {
         Log.d("HTTPS","Onclick");
         final String[] week = weekly.split(",");
         OkHttpClient build = new OkHttpClient.Builder()
-                .connectTimeout(2, TimeUnit.SECONDS)
-                .readTimeout(2, TimeUnit.SECONDS)
-                .writeTimeout(2, TimeUnit.SECONDS)
+                .connectTimeout(3, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
+                .writeTimeout(3, TimeUnit.SECONDS)
                 .addInterceptor(new AddCookiesInterceptor(activity))
                 .build();
 
@@ -162,8 +162,8 @@ public class MyWebViewClient extends WebViewClient {
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-
                         Toasty.error(activity, "获取数据失败", Toast.LENGTH_LONG).show();
+                        Log.e("error","error");
                     }
                     @Override
                     public void onComplete() {
