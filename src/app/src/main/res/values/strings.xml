@@ -25,11 +25,17 @@
     <string name="gumball_shangren">Nice to meet you</string>
     <string name="gumball_maoxianzhe">你好啊，旅行者</string>
     <string name="gumball_xiaomei">请问你见过一只蓝色的冈布奥吗？</string>
+    <string name="gumball_sunwukong">金箍棒勒个棒勒个棒勒个棒棒棒</string>
+
     <string name="appbar_right_info">选择周</string>
     <string name="appbar_left_info">菜单</string>
+    <string name="appbar_left_menu_1">添加与切换课程表</string>
+    <string name="appbar_left_menu_2">在该课程表添加课程</string>
+    <string name="activity_info_edit_btn">删除该课程</string>
     <string name="activity_list_btn">添加</string>
 
-    <string name="item_schedule_name_default">2018 第一学期</string>
+    <string name="item_schedule_name_default">2019 第一学期</string>
+    <string name="todo">Something!</string>
 
     <string-array name="weekday_ch_zn">
         <item>星期一</item>

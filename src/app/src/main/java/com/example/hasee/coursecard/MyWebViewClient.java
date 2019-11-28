@@ -8,6 +8,7 @@ import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.webkit.WebResourceRequest;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,21 +54,33 @@ public class MyWebViewClient extends WebViewClient {
         this.activity =activity;
     }
 
+    /*  警告: [deprecation]
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         view.loadUrl(url);
         return true;
     }
+    */
+
+    @Override
+    public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        view.loadUrl(String.valueOf(request.getUrl()));
+        Log.d("shouldOverrideUrlLoadin","shouldOverrideUrlLoading");
+        return true;
+    }
 
     public void onPageFinished(WebView view, String url) {
+
         CookieManager cookieManager = CookieManager.getInstance();
         String CookieStr = cookieManager.getCookie(url);
         Common.cookie = CookieStr;
-        if(CookieStr.contains("LYSESSIONID") && CookieStr.contains("user")) {
-            Log.d("msg", CookieStr);
-            String[] weeklys = {"1,9","10","11,19","20"};
-            for (String i: weeklys)
-                Onclick4Data(i,Common.academic);
-        }
+        if(CookieStr != null)
+            if(CookieStr.contains("LYSESSIONID") && CookieStr.contains("user")) {
+                Log.d("msg", CookieStr);
+                String[] weeklys = {"1,9","10","11,19","20"};
+                for (String i: weeklys)
+                    Onclick4Data(i,Common.academic);
+            }
+
     }
     //githubapi接口
 //    https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
@@ -97,9 +110,8 @@ public class MyWebViewClient extends WebViewClient {
         return temp;
     }
     // 获取json转换DBcourse插入数据库
-    public void Onclick4Data(String weekly, final String academic) {
+    public void Onclick4Data(final String weekly, final String academic) {
 //        https://raw.githubusercontent.com/Gongzq5/TEST/master/no-schedule_academicYear=2018-1_weekly=9
-        Log.d("HTTPS","Onclick");
         final String[] week = weekly.split(",");
         OkHttpClient build = new OkHttpClient.Builder()
                 .connectTimeout(3, TimeUnit.SECONDS)
@@ -134,7 +146,7 @@ public class MyWebViewClient extends WebViewClient {
                         courses.clear();
                         for (int i = 0; i < jsonRootBean.getData().size(); i++) {
                             Data data = jsonRootBean.getData().get(i);
-                            for (int j = Integer.parseInt(week[0]);j < Integer.parseInt(week[1])+1; j++) {
+                            for (int j = Integer.parseInt(week[0]); week.length > 1 ? j < Integer.parseInt(week[1])+1 : j < j + 1; j++) {
                                 if (!data.getMonday().equals("null") && data.getSection() % 2 != 0) {
                                     String[] temp = InfoConvert(data.getMonday());
                                     courses.add(new DBCourse(academic, "星期一", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
@@ -157,7 +169,7 @@ public class MyWebViewClient extends WebViewClient {
                                 }
                             }
                         }
-                        Log.d("class", Integer.toString(courses.size()));
+                        Log.d("class","weekly: "+ weekly +" ,courses number :"+ Integer.toString(courses.size()));
                     }
                     @Override
                     public void onError(Throwable e) {
@@ -167,16 +179,9 @@ public class MyWebViewClient extends WebViewClient {
                     }
                     @Override
                     public void onComplete() {
+                        Log.d("Complete","on complete");
                         Utils.insert(activity,courses);
                         Common.statecode = "OK";
-//                        flag++;
-//                        if (flag == 2) {
-//                            Intent intent = new Intent();
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-//                            intent.setClass(activity, ListActivity.class);
-//                            flag = 0;
-//                            activity.startActivity(intent);
-//                        }
                     }
                 });
     }
@@ -195,6 +200,7 @@ public class MyWebViewClient extends WebViewClient {
             final Request.Builder builder = chain.request().newBuilder();
             SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
             //最近在学习RxJava,这里用了RxJava的相关API大家可以忽略,用自己逻辑实现即可
+            //使用已保存的cookie获取信息，可以省略登录步骤
             rx.Observable.just(sharedPreferences.getString("cookie", ""))
                     .subscribe(new Action1<String>() {
                         @Override

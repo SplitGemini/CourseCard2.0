@@ -15,6 +15,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.PopupWindow;
+import android.widget.Button;
+import android.app.AlertDialog;
+import android.view.MotionEvent;
+import android.view.GestureDetector;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 
 import com.example.hasee.coursecard.database.CourseDatabase;
 import com.example.hasee.coursecard.database.DBCourse;
@@ -44,10 +52,12 @@ public class MainActivity extends AppCompatActivity {
   private Spinner spinner;
   private ImageView back;
   private ImageView add;
+  private PopupWindow popupWindow;
+  private GestureDetector gestureDetector;
   private boolean init;
   private NotificationManager notificationManager;
   private int year,month,day,hour,minute,second,week,mToPosition;
-  private Boolean mShouldScroll = true;
+  private Boolean mShouldScroll = false;
   private String academicYear = "2019-1";
   private List<Course> Mcourse;
   private Boolean tag = true;
@@ -55,14 +65,9 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-//  Toast
-    if (this.getIntent().getStringExtra("academic") != null) {
-        academicYear = this.getIntent().getStringExtra("academic");
-        SharedPreferences userSettings = getSharedPreferences("setting", 0);
-        SharedPreferences.Editor editor = userSettings.edit();
-        editor.putString("academic",academicYear);
-        editor.commit();
-    }
+    // Toast
+    setAcademicYear();
+
     // bg
     RelativeLayout layout = findViewById(R.id.activity_main_layout);
     layout.getBackground().setAlpha(50);
@@ -78,20 +83,28 @@ public class MainActivity extends AppCompatActivity {
     back.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Intent intent = new Intent().setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
-                                    .setClass(MainActivity.this,ListActivity.class);
-        MainActivity.this.startActivity(intent);
+          if (popupWindow != null && popupWindow.isShowing()) {
+              popupWindow.dismiss();
+              return;
+          } else {
+              initPopupWindowView();
+              popupWindow.showAsDropDown(v, 0, 5);
+          }
       }
     });
-    // add
-//    add.setVisibility(View.INVISIBLE);
+
+    //add.setVisibility(View.INVISIBLE);
     add.setOnClickListener(new View.OnClickListener() {
       @Override
-      public void onClick(View v) { spinner.performClick(); }});
+      public void onClick(View v) {
+          //检查菜单是否为显示状态
+          checkPopupWindows();
+          spinner.performClick();
+      }});
     // spinner
     init = true;
     List<String> data = new ArrayList<>();
-    for (int i = 1; i <= 18; ++i) {
+    for (int i = 1; i <= 20; ++i) {
       data.add("第 " + i + " 周");
     }
     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.spinner_text, data);
@@ -107,10 +120,13 @@ public class MainActivity extends AppCompatActivity {
           queryInfoFromDB4uiChange(position+1,academicYear);
             SharedPreferences userSettings = getSharedPreferences("setting", 0);
             SharedPreferences.Editor editor = userSettings.edit();
+            //保持当前选择周数
             editor.putString("weekly",Integer.toString(position+1));
-            editor.commit();
-            if (week > 1 && week < 6 )
-          smoothMoveToPosition(recyclerView,getItemPosition(week));
+            editor.apply();
+            //不是星期一和星期六才滚
+            if(week > 1 && week < 6)
+                smoothMoveToPosition(recyclerView,getItemPosition(week));
+            Log.d("Spinner recycle view", "onItemSelected: " + week);
         }
       }
       @Override
@@ -118,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
       
       }
     });
+
     // header
     recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
       @Override
@@ -150,24 +167,6 @@ public class MainActivity extends AppCompatActivity {
     
     // default courses
     final List<Course> courses = new ArrayList<>();
-//    courses.add(new Course("星期一"));
-//    courses.add(new Course("星期一", "计算机视觉", "曾坤", "东B104", 1, "1-18周"));
-//    courses.add(new Course("星期一", "人工智能", "任江涛", "东A207", 5, "1-18周"));
-//    courses.add(new Course("星期二"));
-//    courses.add(new Course("星期二", "计算机网络", "温武少", "东C203", 2, "1-18周"));
-//    courses.add(new Course("星期二", "编译原理", "娄定俊", "东C104", 3, "1-18周"));
-//    courses.add(new Course("星期二", "数字媒体基础", "杨猛", "东C103", 4, "1-18周"));
-//    courses.add(new Course("星期二", "自然灾害", "袁文平", "东B304", 5, "1-18周"));
-//    courses.add(new Course("星期三"));
-//    courses.add(new Course("星期三", "电子政务导论", "毛明志", "东B205", 1, "1-18周"));
-//    courses.add(new Course("星期三", "数字图像处理", "倪江群", "东C305", 3, "1-18周"));
-//
-//    courses.add(new Course("星期四"));
-//    courses.add(new Course("星期四", "计算机网络", "温武少", "东C203", 2, "1-18周"));
-//    courses.add(new Course("星期四", "编译原理", "娄定俊", "东C104", 3, "1-18周"));
-//    courses.add(new Course("星期五"));
-//    courses.add(new Course("星期五", "数字图像处理", "倪江群", "东C305", 2, "1-18周"));
-
 
     // adapter
     adapter = new CCRecyclerViewAdapter(this, R.layout.item_course, courses) {
@@ -236,20 +235,57 @@ public class MainActivity extends AppCompatActivity {
         
       }
     };
-    
-    adapter.setOnItemClickListener(new CCRecyclerViewAdapter.OnItemClickListener() {
-      @Override
-      public void onClick(int position) {
-        Course course = adapter.getItem(position);
-        if (!course.isHeader()) {
-          Intent intent = new Intent(MainActivity.this, InfoActivity.class);
-          Bundle bundle = new Bundle();
-          bundle.putSerializable("Course", course);
-          intent.putExtra("Course", bundle);
-          startActivity(intent);
-        }
-      }
-    });
+
+
+      gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+          @Override
+          public boolean onSingleTapUp(MotionEvent e){
+              View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+              if (childView != null) {
+                  int position = recyclerView.getChildLayoutPosition(childView);
+                    Log.d(getApplication().toString(), "single click:" + position);
+                  checkPopupWindows();
+                  Course course = adapter.getItem(position);
+                  if (!course.isHeader()) {
+                      Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                      Bundle bundle = new Bundle();
+                      bundle.putSerializable("Course", course);
+                      intent.putExtra("Course", bundle);
+                      startActivity(intent);
+                  }
+                  return true;
+              }
+              return super.onSingleTapUp(e);
+          }
+          @Override
+          public void onLongPress(MotionEvent e) {
+              super.onLongPress(e);
+              View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+              if (childView != null) {
+                  int position = recyclerView.getChildLayoutPosition(childView);
+                  Log.d(getApplication().toString(), "long click:" + position);
+                  showAlertDialog(position);
+              }
+          }
+      });
+
+      recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+          @Override
+          public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+              if (gestureDetector.onTouchEvent(e)) {
+                  return true;
+              }
+              return false;
+          }
+          @Override
+          public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+          }
+          @Override
+          public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+          }
+      });
+
     
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
     recyclerView.setAdapter(adapter);
@@ -257,10 +293,12 @@ public class MainActivity extends AppCompatActivity {
       @Override
       public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
           super.onScrollStateChanged(recyclerView, newState);
-          if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {//
+          //检查菜单是否为显示状态
+          checkPopupWindows();
+          if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
               mShouldScroll = false;
               if (week >1 && week <= 6 )
-              smoothMoveToPosition(recyclerView, mToPosition);
+                smoothMoveToPosition(recyclerView, mToPosition);
           }
       }
     });
@@ -274,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences userSettings = getSharedPreferences("setting", 0);
         academicYear = userSettings.getString("academic","2018-1");
         int weekly =  Integer.parseInt(userSettings.getString("weekly","1"));
-        Log.d("xxxxxxxxxxxxxxx", academicYear + weekly);
+        Log.d("now week number :", academicYear + weekly);
         spinner.setSelection(weekly-1);
         queryInfoFromDB4uiChange(weekly, academicYear);
         if (adapter.getItemCount() != 0)
@@ -288,6 +326,72 @@ public class MainActivity extends AppCompatActivity {
     }
 
   }
+    private void checkPopupWindows(){
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+            popupWindow = null;
+        }
+    }
+
+    private void setAcademicYear(){
+        if (this.getIntent().getStringExtra("academic") != null) {
+            academicYear = this.getIntent().getStringExtra("academic");
+            SharedPreferences userSettings = getSharedPreferences("setting", 0);
+            SharedPreferences.Editor editor = userSettings.edit();
+            editor.putString("academic",academicYear);
+            editor.apply();
+            //editor.commit();
+        }
+    }
+
+    private void initPopupWindowView() {
+        //获取自定义布局文件pop.xml的视图
+        View customView = getLayoutInflater().inflate(R.layout.back_text,
+                null, false);
+        // 创建PopupWindow实例,宽度和高度
+        popupWindow = new PopupWindow(customView, 500, 500);
+        // 设置动画效果
+        popupWindow.setAnimationStyle(R.style.AnimationFade);
+        // 自定义view添加触摸事件
+        customView.setOnClickListener(new View.OnClickListener() {
+                                          @Override
+                                          public void onClick(View v) {
+                                              checkPopupWindows();
+                                          }
+                                      }
+
+        );
+        /** 实现自定义视图的功能 */
+        Button btton2 = (Button) customView.findViewById(R.id.button2);
+        Button btton3 = (Button) customView.findViewById(R.id.button3);
+        btton2.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          Intent intent = new Intent().setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                                                  .setClass(MainActivity.this,ListActivity.class);
+                                          MainActivity.this.startActivity(intent);
+                                          checkPopupWindows();
+                                      }
+                                  }
+
+        );
+        btton3.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                            checkPopupWindows();
+                                          Intent intent = new Intent(MainActivity.this, InfoActivityEdit.class);
+                                          Bundle bundle = new Bundle();
+                                          Course course = new Course("星期四", "计算机网络", "温武少", "东C203", 2, "1-18周");
+                                          bundle.putSerializable("Course_edit", course);
+                                          intent.putExtra("Course_edit", bundle);
+                                          startActivity(intent);
+                                      }
+                                  }
+
+        );
+
+    }
+
 
   private void NotificationInit(int start, int end) {
     String id = "my_channel_01";
@@ -372,13 +476,13 @@ public class MainActivity extends AppCompatActivity {
       NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
       Log.i("channel", mChannel.toString());
       notificationManager.createNotificationChannel(mChannel);
-      notification = new Notification.Builder(this)
+      notification = new Notification.Builder(this,"default")
               .setChannelId(id)
               .setContentTitle("课程提醒")
               .setContentText(messege)
               .setSmallIcon(R.drawable.icon_round_gray).build();
     } else {
-      NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+      NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this,"default")
               .setContentTitle("课程提醒")
               .setContentText(messege)
               .setSmallIcon(R.mipmap.ic_launcher)
@@ -419,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
         Mcourse.add(new Course(weekdayInCh[i]));
       }
       for (DBCourse dbCourse : dbCourseList) {
-        String str_default = "1-18周";
+        String str_default = "1-20周";
         Mcourse.add(new Course(weekdayInCh[i], dbCourse.getName(), dbCourse.getTeacher(),
                 dbCourse.getPlace(), dbCourse.getTime(), str_default));
         Log.i("Course !=", dbCourse.getName());
@@ -438,6 +542,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
+      if(Mcourse.size() == 0)   return;
     // 第一个可见位置
     int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
     // 最后一个可见位置
@@ -446,7 +551,7 @@ public class MainActivity extends AppCompatActivity {
     if (position < firstItem) {
         // 如果跳转位置在第一个可见位置之前，就smoothScrollToPosition可以直接跳转
         if (week >1 && week < 6 )
-        mRecyclerView.smoothScrollToPosition(position);
+            mRecyclerView.smoothScrollToPosition(position);
     } else if (position <= lastItem) {
         // 跳转位置在第一个可见项之后，最后一个可见项之前
         // smoothScrollToPosition根本不会动，此时调用smoothScrollBy来滑动到指定位置
@@ -459,8 +564,9 @@ public class MainActivity extends AppCompatActivity {
         // 如果要跳转的位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
         // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
         if (week >1 && week < 6 )
-        mRecyclerView.smoothScrollToPosition(position);
+            mRecyclerView.smoothScrollToPosition(position);
         mToPosition = position;
+        //重置自动滑动到当天的flag
         mShouldScroll = true;
     }
   }
@@ -505,18 +611,11 @@ public class MainActivity extends AppCompatActivity {
 
   @Override
   protected void onResume() {
-
     super.onResume();
+
     Log.d("onResume: ", Boolean.toString(this.getIntent().getStringExtra("academic") == null));
     //  Toast
-    if (this.getIntent().getStringExtra("academic") != null) {
-        academicYear = this.getIntent().getStringExtra("academic");
-        SharedPreferences userSettings = getSharedPreferences("setting", 0);
-        SharedPreferences.Editor editor = userSettings.edit();
-        editor.putString("academic",academicYear);
-        //editor.commit();
-        editor.apply();
-    }
+    setAcademicYear();
     queryInfoFromDB4uiChange(1,academicYear);
     if (adapter.getItemCount() == 0) {
       header.setVisibility(View.INVISIBLE);
@@ -524,10 +623,34 @@ public class MainActivity extends AppCompatActivity {
       header.setVisibility(View.VISIBLE);
     }
   }
+
   @Override
   protected void onNewIntent(Intent intent) {
     // TODO Auto-generated method stub
     super.onNewIntent(intent);
     setIntent(intent);
   }
+
+  /**
+   * 弹出对话框选择进入修改课程页面
+   *
+   */
+    private void showAlertDialog(final Integer position){
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("修改课程").setIcon(R.drawable.icon)
+                .setNegativeButton("取消", null).setPositiveButton("确定", new OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //处理确认按钮的点击事件
+                        Course course = adapter.getItem(position);
+                        if (!course.isHeader()) {
+                            Intent intent = new Intent(MainActivity.this, InfoActivityEdit.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("Course_edit", course);
+                            intent.putExtra("Course_edit", bundle);
+                            startActivity(intent);
+                        }
+                    }
+                }).setMessage("将进入修改该课程界面").create();
+        dialog.show();
+    }
 }

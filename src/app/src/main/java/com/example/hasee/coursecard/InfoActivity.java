@@ -135,7 +135,7 @@ public class InfoActivity extends AppCompatActivity {
         break;
       case 6:
         res_id = R.drawable.xiaomei;
-        msg_id = R.string.gumball_xiaomei;
+        msg_id = R.string.gumball_sunwukong;
         P = 1.0;  // 晚课三连，你总能遇到小美
         break;
       default:

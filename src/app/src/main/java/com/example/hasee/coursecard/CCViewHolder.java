@@ -23,13 +23,15 @@ public class CCViewHolder extends RecyclerView.ViewHolder {
     CCViewHolder ccViewHolder = new CCViewHolder(context, view, viewGroup);
     return ccViewHolder;
   }
-  
+
+  @SuppressWarnings("unchecked")
   public <T extends View> T getView(int viewId) {
     View view = views.get(viewId);
     if (view == null) {
       view = this.view.findViewById(viewId);
       views.put(viewId, view);
     }
-    return (T) view;
+
+    return (T)view;
   }
 }

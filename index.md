@@ -1,6 +1,4 @@
-
 # 课表
-
 
 
 
@@ -14,7 +12,6 @@
 - 4、[Vision](dashboard/04-vision.md)（项目愿景）
 - 5、[Product Backlog](dashboard/05-product-backlog.md) （产品特性库）
 - 6、[Requirement specification](https://sysu-coursecard.github.io/Coursecard2.0dashboard/06-requirement-specification)（需求规格说明书）
-  
   - 6.1 Usecase Diagram and UML Activity Diagram（用例图，业务过程/多泳道图）
   - 6.2 Use Cases（用例+活动图）
   - 6.3 Domian Models（领域模型）
@@ -32,7 +29,6 @@
   - 8.4 部署说明
   - [生产规范与指南](dashboard/生产规范与指南.pdf)
 - 9、成品展示
-  
   - 9.1 [短视频](dashboard/assets/video.mp4)
 - X1 [meeting-records](dashboard/meeting.md)
 - X2 Final Report
@@ -41,5 +37,8 @@
   - [16340062_巩文骏](dashboard/finalReport/16340062.md)
   - [16340065_谷田](dashboard/finalReport/16340065.md)
   - [16340066_郭弘](dashboard/finalReport/16340066.md)
-  
-    
+
+## 新内容
+
+[郭弘更新的新内容部分](dashboard/new_content/ReadMe.md)
+

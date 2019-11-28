@@ -13,11 +13,23 @@ import com.example.hasee.coursecard.database.Notes;
 
 import java.util.List;
 
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+// rx1
+//import rx.Observable;
+//import rx.Subscriber;
+//import rx.android.schedulers.AndroidSchedulers;
+//import rx.schedulers.Schedulers;
+
+//rx2
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class Utils {
+    /* never used test
     public static void insertInitData(Context context) {
         final DBCourse dbCourse1 = new DBCourse("2018-1", "星期一", "计网", "温武少", "C203", 1, 1);
         final DBCourse dbCourse2 = new DBCourse("2018-1", "星期一", "计网", "温武少", "C201", 1, 1);
@@ -95,10 +107,21 @@ public class Utils {
                 .subscribeOn(Schedulers.io())
                 .subscribe(subscriber);
     }
+    */
+
     static public void insert(final Context context, final List<DBCourse> courses) {
         final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
-
-        rx.Observable<Long> observable = rx.Observable.create(new rx.Observable.OnSubscribe<Long>() {
+        Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
+            @Override
+            public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
+                Log.d("Intent","Oncompleted 1");
+                courseDao.insertCourses(courses);
+                Log.d("Intent","Oncompleted 2");
+                emitter.onComplete();
+            }
+        });
+        /*
+        rx.Observable<Long> observable = rx.Observable.create(new Observable.OnSubscribe<Long>() {
             @Override
             public void call(Subscriber<? super Long> subscriber) {
                 Log.d("Intent","Oncompleted 1");
@@ -106,11 +129,16 @@ public class Utils {
                 Log.d("Intent","Oncompleted 2");
                 subscriber.onCompleted();
             }
-        });
 
-        Subscriber<Long> subscriber = new Subscriber<Long>() {
+        });
+        */
+        Observer<Long> subscriber = new Observer<Long>() {
             @Override
-            public void onCompleted() {
+            public void onSubscribe(Disposable d) {
+
+            }
+            @Override
+            public void onComplete() {
                 Log.d("Intent","Oncompleted");
                 if (Common.flag) {
                     Intent intent = new Intent();

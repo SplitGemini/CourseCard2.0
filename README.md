@@ -1,13 +1,5 @@
-<div align=center><img width = '550' height ='550' src =img/icon.png/></div>
-# <center>Course Card</center>
-
-{:.no_toc}
-* 目录
-{:toc}
-
-
-
-
+<div align=center><img width = '550' height ='550' src ="img/icon.png"/></div>
+<center><font size="20">Course Card</font></center>
 ## 应用简介
 
 Course Card是一款课程表应用。用户可以通过中大教务系统导入课程表，在日常生活中方便地查询每日课程。除此之外，Course Card还有课程提醒功能和备注功能，可以帮助用户合理安排时间。我们还留了一个彩蛋，如果用户足够幸运的话，还有机会在课程信息界面偶遇可爱的冈布奥。
@@ -17,15 +9,26 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 
 ## 使用说明
 用户首次打开应用时，课程列表为空，点击左上角的列表按钮跳转到学期列表界面。点击下方的添加按钮，弹出学期菜单，选择学期后添加到学期列表。
-<img src="img/1.png" style="zoom:33%;" /><img src="img/2.png" style="zoom:33%;" /><img src="img/3.png" style="zoom:33%;" /><img src="img/4.png" style="zoom:33%;" />
+<div align="center">
+<img src="img/1.png" width="180"/><img src="img/2.png" width="180"/><img src="img/3.png" width="180" /><img src="img/4.png" width="180" />
+</div>
+
 点击添加的学期，跳转到中央身份验证服务页面，输入NetID和密码，如果身份 
 验证成功就能获取该学期课程信息。再次点击该学期，跳转到课程列表，显示一周之内的课程信息，上下滑动查看，当前日期始终悬浮在顶部。点击右上角下拉菜单，选择周数并跳转。
-<img src="img/5.png" style="zoom:33%;" /><img src="img/6.png" style="zoom:33%;" /><img src="img/7.png" style="zoom:33%;" /><img src="img/8.png" style="zoom:33%;" />
-点击课程可以查看详细信息，点击横线编辑备注，写好备注之后点击空白区域完成更新。只要该课程添加了备注，在任意一周都可以查看到备注信息。退出应用再次打开时，会自动跳转到当天对应的日期，并在通知栏显示课程提醒。
-<img src="img/9.png" style="zoom:33%;" /><img src="img/10.png" style="zoom:33%;" /><img src="img/11.png" style="zoom:33%;" /><img src="img/12.png" style="zoom:33%;" />
-最后，用户进入课程信息界面时，有机会见到不同的冈布奥。
-<img src="img/13.png" style="zoom:33%;" /><img src="img/14.png" style="zoom:33%;" /><img src="img/15.png" style="zoom:33%;" />
 
+<div align="center">
+<img src="img/5.png" width="180"/><img src="img/6.png" width="180"/><img src="img/7.png" width="180" /><img src="img/8.png" width="180" />
+</div>
+点击课程可以查看详细信息，点击横线编辑备注，写好备注之后点击空白区域完成更新。只要该课程添加了备注，在任意一周都可以查看到备注信息。退出应用再次打开时，会自动跳转到当天对应的日期，并在通知栏显示课程提醒。
+
+<div align="center">
+<img src="img/9.png" width="180"/><img src="img/10.png" width="180"/><img src="img/11.png" width="180" /><img src="img/12.png" width="180" />
+</div>
+最后，用户进入课程信息界面时，有机会见到不同的冈布奥。
+
+<div align="center">
+<img src="img/13.png" width="180"/><img src="img/14.png" width="180"/><img src="img/15.png" width="180"/>
+</div>
 ## 三层架构
 
 <img src="img/16.jpg" style="zoom:60%;" />
@@ -36,10 +39,9 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 
 ### 中大课程表访问接口
 
-使用WebView显示中央身份验证服务页面：
-https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login
-身份验证成功可以得到cookie，在请求头中添加cookie后，向中大教务系统请求课程数据：
-https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule
+使用WebView显示中央身份验证服务页面：[在这](https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login)
+身份验证成功可以得到cookie，在请求头中添加cookie后，向中大教务系统请求课程数据：[在这](https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule)
+
 ### 数据库
 数据库建立Course表和Note表，分别存储课程信息和备注信息。
 Course表属性如下：ID，学期，教师，日期，地点，节数，周数。添加课程时，根据从中大教务系统获取的课程信息添加数据。查询课程时，根据课程信息获取相应数据。查询学期时，获取学期属性为该学期的所有课程。

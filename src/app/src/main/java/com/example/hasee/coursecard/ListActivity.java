@@ -13,6 +13,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.view.MotionEvent;
+import android.view.GestureDetector;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
@@ -43,12 +48,13 @@ public class ListActivity extends AppCompatActivity {
   private SortedAdapter adapter;
   private Button btn;
   private OptionsPickerView pvOptions;
+  private GestureDetector gestureDetector;
   private String name;
   private String academicYear = "2019-1";
   private Schedule temp;
-  private List<DBCourse> courses = new ArrayList<>();
   
   @Override
+  @SuppressWarnings("unchecked")
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_list);
@@ -100,39 +106,69 @@ public class ListActivity extends AppCompatActivity {
         name.setText(schedule.getName());
       }
     };
-    
-    adapter.setOnItemClickListener(new SortedAdapter.OnItemClickListener() {
-      @Override
-      public void onClick(int position) {
-//        Toast.makeText(ListActivity.this, adapter.getItem(position).getName(), Toast.LENGTH_SHORT).show();
-        List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
-        Intent intent = new Intent();
-        intent.putExtra("academic", adapter.getItem(position).getTerm());
-        Common.academic = adapter.getItem(position).getTerm();
-        Log.d("all:size ", all.size() + "");
-        Log.d("academic: ",adapter.getItem(position).getTerm());
-        for (String str : all) {
-            Log.d("str: ",str);
-          if (adapter.getItem(position).getTerm().equals(str)) {
-              intent.setClass(ListActivity.this,MainActivity.class);
-              courses.clear();
-              ListActivity.this.startActivity(intent);
-              return;
+
+      gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
+          @Override
+          public boolean onSingleTapUp(MotionEvent e){
+              View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+              if (childView != null) {
+                  int position = recyclerView.getChildLayoutPosition(childView);
+                  Log.d(getApplication().toString(), "single click:" + position);
+                  List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
+                  Intent intent = new Intent();
+                  intent.putExtra("academic", adapter.getItem(position).getTerm());
+                  Common.academic = adapter.getItem(position).getTerm();
+                  Log.d("all:size ", all.size() + "");
+                  Log.d("academic: ",adapter.getItem(position).getTerm());
+                  for (String str : all) {
+                      if (adapter.getItem(position).getTerm().equals(str)) {
+                          intent.setClass(ListActivity.this,MainActivity.class);
+                          ListActivity.this.startActivity(intent);
+                          return true;
+                      }
+                  }
+                  intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                  intent.setClass(ListActivity.this,CASActivity.class);
+                  ListActivity.this.startActivity(intent);
+                  return true;
+              }
+              return super.onSingleTapUp(e);
           }
-        }
-        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        intent.setClass(ListActivity.this,CASActivity.class);
-        ListActivity.this.startActivity(intent);
-      }
-    });
-    
-    
+          @Override
+          public void onLongPress(MotionEvent e) {
+              super.onLongPress(e);
+              View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+              if (childView != null) {
+                  int position = recyclerView.getChildLayoutPosition(childView);
+                  Log.d(getApplication().toString(), "long click:" + position);
+                  showAlertDialog(position);
+              }
+          }
+      });
+
+      recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+          @Override
+          public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+              if (gestureDetector.onTouchEvent(e)) {
+                  return true;
+              }
+              return false;
+          }
+          @Override
+          public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+          }
+          @Override
+          public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+          }
+      });
+
     recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
     recyclerView.setAdapter(adapter);
     
     // default options
     final ArrayList<String> options1Items = new ArrayList<>();
-    for (int i = 2000; i < 2100; ++i) {
+    for (int i = 2016; i < 2030; ++i) {
       options1Items.add("" + i);
     }
     
@@ -161,10 +197,13 @@ public class ListActivity extends AppCompatActivity {
             temp.setTerm(item1 + "-" + "3");
             academicYear = item1 + "-" + "3";
         }
+        /*
         if (academicYear.compareTo("2017-2") < 0){
             Toasty.warning(ListActivity.this,"无法查询"+item1+item2+"课表").show();
             return;
         }
+
+         */
 //          Log.d("onOptionsSelect", "onOptionsSelect: " + academicYear);
 //        String[] weeklys = {"1,18"};
 //          Log.d("HTTPS",temp.getTerm());
@@ -183,7 +222,7 @@ public class ListActivity extends AppCompatActivity {
       }
     })
             .setContentTextSize(20)
-            .setSelectOptions(18, 1)
+            .setSelectOptions(3, 0) //设置19年第一学期为默认
             .build();
     pvOptions.setNPicker(options1Items, options2Items, null);
     
@@ -196,5 +235,22 @@ public class ListActivity extends AppCompatActivity {
     });
       Log.i("onCreate", ": notify data set changed()");
     adapter.notifyDataSetChanged();
+  }
+
+  private void showAlertDialog(final Integer position){
+      AlertDialog dialog = new AlertDialog.Builder(this).setTitle("删除课程库").setIcon(R.drawable.icon)
+              .setNegativeButton("取消", null).setPositiveButton("确定", new OnClickListener() {
+
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                      //处理确认按钮的点击事件
+                      String deleteAcademic = adapter.getItem(position).getTerm();
+                      Log.d("delete academic: ",deleteAcademic);
+                      Toasty.success(ListActivity.this,"删除成功").show();
+                      //CourseDatabase.getInstance(ListActivity.this).getCourseDao().deleteCourseByAcademicYears(deleteAcademic);
+                      //adapter.notifyDataSetChanged();
+                  }
+              }).setMessage("将删除该学期所有课程，确认删除？").create();
+      dialog.show();
   }
 }
