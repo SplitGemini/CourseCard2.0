@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
     int next_hour = 0,next_minute = 0;
 
     getTime();
-    Log.d("dayOfWeek: ", dayOfWeek +" "+start +" "+ end);
+    Log.d("notification ", dayOfWeek + dayOfWeek +" "+start +" "+ end);
     if (start > 0 && end <= 0)
         end = adapter.getItemCount();
     if (start == -1 ) {

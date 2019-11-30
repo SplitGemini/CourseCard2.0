@@ -125,4 +125,114 @@ public class Utils {
                 .subscribeOn(Schedulers.io())
                 .subscribe(subscriber);
     }
+    static public void deleteCourse(final Context context, final DBCourse course) {
+        final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
+        Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
+            @Override
+            public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
+                Log.d("util","emitter deleteCourse 1");
+                courseDao.deleteCourse(course);
+                Log.d("util","emitter deleteCourse 2");
+                emitter.onComplete();
+            }
+        });
+        Observer<Long> subscriber = new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d("util","deleteCourse onSubscribe");
+            }
+            @Override
+            public void onComplete() {
+                Log.d("util","deleteCourse Oncompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                Log.d("util","deleteCourse onNext");
+            }
+        };
+
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(subscriber);
+    }
+
+    static public void updateCourse(final Context context, final DBCourse course) {
+        final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
+        Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
+            @Override
+            public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
+                Log.d("util","emitter updateCourse 1");
+                courseDao.updateCourse(course);
+                Log.d("util","emitter updateCourse 2");
+                emitter.onComplete();
+            }
+        });
+        Observer<Long> subscriber = new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d("util","updateCourse onSubscribe");
+            }
+            @Override
+            public void onComplete() {
+                Log.d("util","updateCourse Oncompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                Log.d("util","updateCourse onNext");
+            }
+        };
+
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(subscriber);
+    }
+
+    static public void newCourse(final Context context, final DBCourse course) {
+        final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
+        Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
+            @Override
+            public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
+                Log.d("util","emitter newCourse 1");
+                courseDao.insertCourse(course);
+                Log.d("util","emitter newCourse 2");
+                emitter.onComplete();
+            }
+        });
+        Observer<Long> subscriber = new Observer<Long>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.d("util","newCourse onSubscribe");
+            }
+            @Override
+            public void onComplete() {
+                Log.d("util","newCourse Oncompleted");
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                Log.d("util","newCourse onNext");
+            }
+        };
+
+        observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(subscriber);
+    }
 }

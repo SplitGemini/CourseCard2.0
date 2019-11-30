@@ -20,6 +20,13 @@
     <dimen name="activity_info_week_font">24sp</dimen>
     <dimen name="activity_info_note_hint_font">24sp</dimen>
     <dimen name="activity_info_note_font">24sp</dimen>
+    <dimen name="activity_info_edit_name_font">20sp</dimen>
+    <dimen name="activity_info_edit_teacher_font">20sp</dimen>
+    <dimen name="activity_info_edit_place_font">20sp</dimen>
+    <dimen name="activity_info_edit_time_font">20sp</dimen>
+    <dimen name="activity_info_edit_week_font">20sp</dimen>
+    <dimen name="activity_info_edit_note_hint_font">20sp</dimen>
+    <dimen name="activity_info_edit_note_font">20sp</dimen>
 
     <dimen name="activity_info_iv_teacher_size">32dp</dimen>
     <dimen name="activity_info_iv_place_size">32dp</dimen>

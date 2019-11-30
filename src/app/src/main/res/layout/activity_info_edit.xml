@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/activity_info_name_default"
                 android:textColor="@color/activity_info_name_font"
-                android:textSize="@dimen/activity_info_name_font"
+                android:textSize="@dimen/activity_info_edit_name_font"
                 android:maxLines="1"/>
 
             <ImageView
@@ -47,7 +47,7 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_teacher_default"
                 android:textColor="@color/activity_info_teacher_font"
-                android:textSize="@dimen/activity_info_teacher_font"
+                android:textSize="@dimen/activity_info_edit_teacher_font"
                 android:maxLines="1"/>
 
             <ImageView
@@ -68,7 +68,7 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_place_default"
                 android:textColor="@color/activity_info_place_font"
-                android:textSize="@dimen/activity_info_place_font"
+                android:textSize="@dimen/activity_info_edit_place_font"
                 android:maxLines="1"/>
 
             <ImageView
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_time_default"
                 android:textColor="@color/activity_info_time_font"
-                android:textSize="@dimen/activity_info_time_font"
+                android:textSize="@dimen/activity_info_edit_time_font"
                 android:maxLines="1"/>
             <ImageView
                 android:id="@+id/activity_info_edit_iv_week"
@@ -109,7 +109,7 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_week_default"
                 android:textColor="@color/activity_info_week_font"
-                android:textSize="@dimen/activity_info_week_font"
+                android:textSize="@dimen/activity_info_edit_week_font"
                 android:maxLines="1"/>
 
             <ImageView
@@ -130,7 +130,7 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_note_hint"
                 android:textColor="@color/activity_info_note_hint_font"
-                android:textSize="@dimen/activity_info_note_hint_font"
+                android:textSize="@dimen/activity_info_edit_note_hint_font"
                 android:maxLines="1"/>
 
             <EditText
@@ -141,7 +141,8 @@
                 android:text="@string/activity_info_edit_hint"
                 android:inputType="none|textMultiLine|text|textImeMultiLine"
                 android:textColor="@color/activity_info_note_font"
-                android:textSize="@dimen/activity_info_note_font" tools:targetApi="o"
+                android:textSize="@dimen/activity_info_edit_note_font"
+                tools:targetApi="o"
                 android:maxLines="8"/>
 
             <ImageView

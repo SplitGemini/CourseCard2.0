@@ -41,9 +41,8 @@ public class InfoActivityEdit extends AppCompatActivity {
     private ImageView gumball;
     private Button button;
     private NoteDao noteDao;
-    private Notes notes;
     private CourseDao courseDao;
-    private boolean isDelete = false;
+    private Notes notes;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +53,6 @@ public class InfoActivityEdit extends AppCompatActivity {
         Bundle bundle = intent.getBundleExtra("Course_edit");
         course = (Course) bundle.getSerializable("Course_edit");
         courseDao = CourseDatabase.getInstance(this).getCourseDao();
-        isDelete = false;
         // bg
         RelativeLayout layout = findViewById(R.id.activity_info_edit_layout);
         layout.getBackground().setAlpha(50);
@@ -240,7 +238,7 @@ public class InfoActivityEdit extends AppCompatActivity {
                         Log.d("delete course","delete course: " + course.getName());
                         List<DBCourse> dbCourseList = courseDao.getCoursesByName(course.getName());
                         for(int i = 0;i < dbCourseList.size();i++){
-                            courseDao.deleteCourse(dbCourseList.get(i));
+                            Utils.deleteCourse(getBaseContext(),dbCourseList.get(i));
                         }
                         Intent result = new Intent();
                         result.putExtra("result", 1);
