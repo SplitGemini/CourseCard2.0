@@ -32,11 +32,11 @@ import es.dmoral.toasty.Toasty;
 public class InfoActivityEdit extends AppCompatActivity {
     private Course course;
     private CardView cv;
-    private TextView name;
-    private TextView teacher;
-    private TextView place;
-    private TextView time;
-    private TextView week;
+    private EditText name;
+    private EditText teacher;
+    private EditText place;
+    private EditText time;
+    private EditText week;
     private EditText note;
     private ImageView gumball;
     private Button button;
@@ -168,7 +168,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         noteDao = CourseDatabase.getInstance(this).getNoteDao();
         notes = noteDao.getNotesByName(course.getName());
         if (notes == null) {
-            notes = new Notes(course.getName(), "");
+            notes = new Notes(course.getId(),course.getName(), "");
         }
         note.setText(notes.getNotes());
 
@@ -244,7 +244,6 @@ public class InfoActivityEdit extends AppCompatActivity {
                         result.putExtra("result", 1);
                         setResult(RESULT_OK, result);
                         finish();
-                        noteDao.deleteNote(notes);
                         Toasty.success(InfoActivityEdit.this,"删除成功");
                     }
                 }).setMessage("所有该名称的课程都会被删除").create();

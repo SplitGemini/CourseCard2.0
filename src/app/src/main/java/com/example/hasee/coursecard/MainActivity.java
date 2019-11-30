@@ -331,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
         academicYear = userSettings.getString("academic","2019-1");
         int weekly =  Integer.parseInt(userSettings.getString("weekly","1"));
         Log.d("now dayOfWeek number", "academic year: " + academicYear+" weekly: " + weekly);
+        weekday.setText(weekly);
         spinner.setSelection(weekly-1);
         queryInfoFromDB4uiChange(DBWeekPosition(weekly-1), academicYear);
         if (adapter.getItemCount() != 0)
@@ -409,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
                                             checkPopupWindows();
                                           Intent intent = new Intent(MainActivity.this, InfoActivityEdit.class);
                                           Bundle bundle = new Bundle();
-                                          Course course = new Course("星期四", "计算机网络", "温武少", "东C203", 2, "1-18周");
+                                          Course course = new Course(0,"星期四", "计算机网络", "温武少", "东C203", 2, "1-18周");
                                           bundle.putSerializable("Course_edit", course);
                                           intent.putExtra("Course_edit", bundle);
                                           startActivityForResult(intent,RESULT_OK);
@@ -558,26 +559,26 @@ public class MainActivity extends AppCompatActivity {
 //    String[] weekdayInCh = this.getResources().getStringArray(R.array.weekday_ch_zn);
     String[] weekdayInCh = { "", "星期一", "星期二", "星期三", "星期四", "星期五" };
     for (int i = 1; i <= 5; i++) {
-      List<DBCourse> dbCourseList = CourseDatabase
+        List<DBCourse> dbCourseList = CourseDatabase
               .getInstance(MainActivity.this)
               .getCourseDao()
               .getCourseByWeekday(academicYear, weekly, weekdayInCh[i]);
-    class DbcourseComparetor implements Comparator<DBCourse> {
-        @Override
-        public int compare(DBCourse d1, DBCourse d2) {
+        class DbcourseComparetor implements Comparator<DBCourse> {
+            @Override
+            public int compare(DBCourse d1, DBCourse d2) {
             return d1.getTime() - d2.getTime();
         }
-    }
-    Collections.sort(dbCourseList, new DbcourseComparetor());
-      if (!dbCourseList.isEmpty()) {
-        Mcourse.add(new Course(weekdayInCh[i]));
-      }
-      for (DBCourse dbCourse : dbCourseList) {
-        String str_default = "1-20周";
-        Mcourse.add(new Course(weekdayInCh[i], dbCourse.getName(), dbCourse.getTeacher(),
+         }
+        Collections.sort(dbCourseList, new DbcourseComparetor());
+        if (!dbCourseList.isEmpty()) {
+            Mcourse.add(new Course(weekdayInCh[i]));
+        }
+        for (DBCourse dbCourse : dbCourseList) {
+            String str_default = "1-20周";
+            Mcourse.add(new Course(dbCourse.getId(),weekdayInCh[i], dbCourse.getName(), dbCourse.getTeacher(),
                 dbCourse.getPlace(), dbCourse.getTime(), str_default));
-        Log.i("Course !=", dbCourse.getName());
-      }
+            Log.i("Course !=", dbCourse.getName());
+        }
     }
     adapter.clear();
     adapter.addAll(Mcourse);

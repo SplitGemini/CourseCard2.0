@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Course implements Serializable {
   private boolean header;
-  
+  private Integer id;
   // weekday
   private String weekday;
   
@@ -14,8 +14,8 @@ public class Course implements Serializable {
   private String place;
   private int time;
   private String week;
-  
   public Course(String weekday) {
+    this.id = 0;
     this.header = true;
     this.weekday = weekday;
     this.name = null;
@@ -25,7 +25,8 @@ public class Course implements Serializable {
     this.week = null;
   }
 
-  public Course(String weekday, String name, String teacher, String place, int time, String week) {
+  public Course(Integer id,String weekday, String name, String teacher, String place, int time, String week) {
+    this.id = id;
     this.header = false;
     this.weekday = weekday;
     this.name = name;
@@ -33,6 +34,13 @@ public class Course implements Serializable {
     this.place = place;
     this.time = time;
     this.week = week;
+  }
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
   }
 
   public String getWeekday() {

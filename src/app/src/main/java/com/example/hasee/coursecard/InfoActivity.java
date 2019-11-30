@@ -160,7 +160,7 @@ public class InfoActivity extends AppCompatActivity {
     noteDao = CourseDatabase.getInstance(this).getNoteDao();
     notes = noteDao.getNotesByName(course.getName());
     if (notes == null) {
-      notes = new Notes(course.getName(), "");
+      notes = new Notes(course.getId(),course.getName(), "");
     }
     note.setText(notes.getNotes());
   }
