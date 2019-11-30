@@ -7,8 +7,8 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="600px"
-        android:layout_height="150px"
+        android:layout_width="@dimen/activity_back_btn_list_btn_width"
+        android:layout_height="@dimen/activity_back_btn_list_btn_height"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:paddingStart="5dp"
@@ -19,14 +19,26 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="600px"
-        android:layout_height="150px"
+        android:layout_width="@dimen/activity_back_btn_list_btn_width"
+        android:layout_height="@dimen/activity_back_btn_list_btn_height"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button2"
         android:layout_marginTop="@dimen/activity_back_btn_margin"
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:text="@string/appbar_left_menu_2"
+        android:textColor="@color/item_schedule_name_font"
+        android:background="@drawable/back_btn_bg"/>
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="@dimen/activity_back_btn_list_btn_width"
+        android:layout_height="@dimen/activity_back_btn_list_btn_height"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/button3"
+        android:layout_marginTop="@dimen/activity_back_btn_margin"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/appbar_left_menu_3"
         android:textColor="@color/item_schedule_name_font"
         android:background="@drawable/back_btn_bg"/>
 </RelativeLayout>

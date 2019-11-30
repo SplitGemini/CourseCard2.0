@@ -1,10 +1,13 @@
 package com.example.hasee.coursecard.database;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
+import com.example.hasee.coursecard.Course;
 
 import java.util.List;
 
@@ -54,4 +57,10 @@ public interface CourseDao {
 
     @Query("delete from COURSE where academicYear = :AcademicYear")
     public void deleteCourseByAcademicYear(String AcademicYear);
+
+    @Delete
+    public int deleteCourse(DBCourse course);
+
+    @Update
+    public int updateCourse(DBCourse course);
 }

@@ -1,6 +1,8 @@
 package com.example.hasee.coursecard;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -17,12 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 
+import com.example.hasee.coursecard.database.CourseDao;
 import com.example.hasee.coursecard.database.CourseDatabase;
+import com.example.hasee.coursecard.database.DBCourse;
 import com.example.hasee.coursecard.database.NoteDao;
 import com.example.hasee.coursecard.database.Notes;
 
 import java.util.Random;
-
+import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class InfoActivityEdit extends AppCompatActivity {
@@ -38,17 +42,19 @@ public class InfoActivityEdit extends AppCompatActivity {
     private Button button;
     private NoteDao noteDao;
     private Notes notes;
+    private CourseDao courseDao;
     private boolean isDelete = false;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_edit);
 
         // initialize
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("Course_edit");
         course = (Course) bundle.getSerializable("Course_edit");
-
+        courseDao = CourseDatabase.getInstance(this).getCourseDao();
+        isDelete = false;
         // bg
         RelativeLayout layout = findViewById(R.id.activity_info_edit_layout);
         layout.getBackground().setAlpha(50);
@@ -106,7 +112,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         String time_text = course.getWeekday() + " " + getString(time_id);
         time.setText(time_text);
         week.setText(course.getWeek());
-        note.bringToFront();
+        //note.bringToFront();
 
         // gumball
         int res_id, msg_id;
@@ -171,10 +177,9 @@ public class InfoActivityEdit extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("delete course","delete course: " + course.getName());
-                isDelete = true;
 
-                onBackPressed();
+                showAlertDialog();
+                //onBackPressed();
             }
         });
     }
@@ -202,25 +207,51 @@ public class InfoActivityEdit extends AppCompatActivity {
      * @return
      */
     private boolean isShouldHideKeyboard(View v, MotionEvent event) {
-        if (v != null && (v instanceof EditText)) {  //判断得到的焦点控件是否包含EditText
+        Log.d("toush",v.toString());
+        if ((v != null && (v instanceof EditText)) || (v != null && (v instanceof Button))) {  //判断得到的焦点控件是否包含EditText或按钮
             int[] l = {0, 0};
             v.getLocationInWindow(l);
             int left = l[0],    //得到输入框在屏幕中上下左右的位置
-                    top = l[1],
-                    bottom = top + v.getHeight(),
-                    right = left + v.getWidth();
+             top = l[1],
+              bottom = top + v.getHeight(),
+             right = left + v.getWidth();
             if (event.getX() > left && event.getX() < right
                     && event.getY() > top && event.getY() < bottom) {
                 // 点击位置如果是EditText的区域，忽略它，不收起键盘。
+                Log.d("shoud hide?","no");
                 return false;
             } else {
+                Log.d("shoud hide?","yes");
                 return true;
             }
         }
         // 如果焦点不是EditText则忽略
         return false;
     }
-
+    /**
+     * 弹出对话框选择进入修改课程页面
+     *
+     */
+    private void showAlertDialog(){
+        AlertDialog dialog = new AlertDialog.Builder(this).setTitle("删除课程").setIcon(R.drawable.icon)
+                .setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d("delete course","delete course: " + course.getName());
+                        List<DBCourse> dbCourseList = courseDao.getCoursesByName(course.getName());
+                        for(int i = 0;i < dbCourseList.size();i++){
+                            courseDao.deleteCourse(dbCourseList.get(i));
+                        }
+                        Intent result = new Intent();
+                        result.putExtra("result", 1);
+                        setResult(RESULT_OK, result);
+                        finish();
+                        noteDao.deleteNote(notes);
+                        Toasty.success(InfoActivityEdit.this,"删除成功");
+                    }
+                }).setMessage("所有该名称的课程都会被删除").create();
+        dialog.show();
+    }
     /**
      * 获取InputMethodManager，隐藏软键盘
      * @param token
@@ -231,9 +262,15 @@ public class InfoActivityEdit extends AppCompatActivity {
             im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
             notes.setNotes(note.getText().toString());
             noteDao.insertNote(notes);
-            if(isDelete)
-                Toasty.success(InfoActivityEdit.this,"删除成功");
-            else Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
+            Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
         }
+    }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();//注销该方法，相当于重写父类这个方法
+        Intent result = new Intent();
+        result.putExtra("result", 0);
+        setResult(RESULT_OK, result);
+        finish();
     }
 }

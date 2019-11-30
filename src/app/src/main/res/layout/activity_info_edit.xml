@@ -20,23 +20,24 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/activity_info_margin">
 
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/activity_info_name_default"
                 android:textColor="@color/activity_info_name_font"
-                android:textSize="@dimen/activity_info_name_font" />
+                android:textSize="@dimen/activity_info_name_font"
+                android:maxLines="1"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_teacher"
-                android:layout_width="@dimen/activity_info_iv_teacher_size"
-                android:layout_height="@dimen/activity_info_iv_teacher_size"
+                android:layout_width="@dimen/activity_info_edit_iv_teacher_size"
+                android:layout_height="@dimen/activity_info_edit_iv_teacher_size"
                 android:layout_below="@id/activity_info_edit_tv_name"
                 android:layout_marginTop="@dimen/activity_info_margin_small"
                 android:contentDescription="@string/todo"
                 app:srcCompat="@drawable/teacher" />
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_teacher"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,17 +47,18 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_teacher_default"
                 android:textColor="@color/activity_info_teacher_font"
-                android:textSize="@dimen/activity_info_teacher_font" />
+                android:textSize="@dimen/activity_info_teacher_font"
+                android:maxLines="1"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_place"
-                android:layout_width="@dimen/activity_info_iv_place_size"
-                android:layout_height="@dimen/activity_info_iv_place_size"
+                android:layout_width="@dimen/activity_info_edit_iv_place_size"
+                android:layout_height="@dimen/activity_info_edit_iv_place_size"
                 android:layout_below="@id/activity_info_edit_tv_teacher"
                 android:layout_marginTop="@dimen/activity_info_margin_small"
                 android:contentDescription="@string/todo"
                 app:srcCompat="@drawable/place" />
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_place"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,17 +68,18 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_place_default"
                 android:textColor="@color/activity_info_place_font"
-                android:textSize="@dimen/activity_info_place_font" />
+                android:textSize="@dimen/activity_info_place_font"
+                android:maxLines="1"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_time"
-                android:layout_width="@dimen/activity_info_iv_time_size"
-                android:layout_height="@dimen/activity_info_iv_time_size"
+                android:layout_width="@dimen/activity_info_edit_iv_time_size"
+                android:layout_height="@dimen/activity_info_edit_iv_time_size"
                 android:layout_below="@id/activity_info_edit_tv_place"
                 android:layout_marginTop="@dimen/activity_info_margin_small"
                 android:contentDescription="@string/todo"
                 app:srcCompat="@drawable/time" />
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -86,16 +89,17 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_time_default"
                 android:textColor="@color/activity_info_time_font"
-                android:textSize="@dimen/activity_info_time_font" />
+                android:textSize="@dimen/activity_info_time_font"
+                android:maxLines="1"/>
             <ImageView
                 android:id="@+id/activity_info_edit_iv_week"
-                android:layout_width="@dimen/activity_info_iv_week_size"
-                android:layout_height="@dimen/activity_info_iv_week_size"
+                android:layout_width="@dimen/activity_info_edit_iv_week_size"
+                android:layout_height="@dimen/activity_info_edit_iv_week_size"
                 android:layout_marginTop="@dimen/activity_info_margin_small"
                 android:layout_below="@id/activity_info_edit_tv_time"
                 app:srcCompat="@drawable/week"
                 android:contentDescription="@string/todo" />
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_week"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,17 +109,18 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_week_default"
                 android:textColor="@color/activity_info_week_font"
-                android:textSize="@dimen/activity_info_week_font" />
+                android:textSize="@dimen/activity_info_week_font"
+                android:maxLines="1"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_note"
-                android:layout_width="@dimen/activity_info_iv_note_size"
-                android:layout_height="@dimen/activity_info_iv_note_size"
+                android:layout_width="@dimen/activity_info_edit_iv_note_size"
+                android:layout_height="@dimen/activity_info_edit_iv_note_size"
                 android:layout_below="@id/activity_info_edit_tv_week"
                 android:layout_marginTop="@dimen/activity_info_margin_big"
                 android:contentDescription="@string/todo"
                 app:srcCompat="@drawable/note" />
-            <TextView
+            <EditText
                 android:id="@+id/activity_info_edit_tv_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,14 +130,15 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:text="@string/activity_info_note_hint"
                 android:textColor="@color/activity_info_note_hint_font"
-                android:textSize="@dimen/activity_info_note_hint_font" />
+                android:textSize="@dimen/activity_info_note_hint_font"
+                android:maxLines="1"/>
 
             <EditText
                 android:id="@+id/activity_info_edit_edt_note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/activity_info_edit_tv_note"
-                android:autofillHints="Notes"
+                android:text="@string/activity_info_edit_hint"
                 android:inputType="none|textMultiLine|text|textImeMultiLine"
                 android:textColor="@color/activity_info_note_font"
                 android:textSize="@dimen/activity_info_note_font" tools:targetApi="o"
@@ -142,7 +148,7 @@
                 android:id="@+id/iv_gumball_edit"
                 android:layout_width="240dp"
                 android:layout_height="240dp"
-                android:layout_below="@id/activity_info_edit_tv_note"
+                android:layout_below="@id/activity_info_edit_tv_week"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/activity_info_margin_big"
                 android:alpha="0.5"

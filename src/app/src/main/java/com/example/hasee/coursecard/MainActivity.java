@@ -1,5 +1,6 @@
 package com.example.hasee.coursecard;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -16,6 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -388,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
         /** 实现自定义视图的功能 */
         Button btton2 = (Button) customView.findViewById(R.id.button2);
         Button btton3 = (Button) customView.findViewById(R.id.button3);
+        Button btton4 = (Button) customView.findViewById(R.id.button4);
         btton2.setOnClickListener(new View.OnClickListener() {
                                       @Override
                                       public void onClick(View v) {
@@ -408,7 +412,23 @@ public class MainActivity extends AppCompatActivity {
                                           Course course = new Course("星期四", "计算机网络", "温武少", "东C203", 2, "1-18周");
                                           bundle.putSerializable("Course_edit", course);
                                           intent.putExtra("Course_edit", bundle);
-                                          startActivity(intent);
+                                          startActivityForResult(intent,RESULT_OK);
+                                      }
+                                  }
+
+        );
+        btton4.setOnClickListener(new View.OnClickListener() {
+                                      @Override
+                                      public void onClick(View v) {
+                                          checkPopupWindows();
+                                          Common.cookie = "";
+                                          CookieManager cookieManager = CookieManager.getInstance();
+                                          cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                                              @Override
+                                              public void onReceiveValue(Boolean value) {
+                                                  Log.d("main activity","remove cookie value:" + value);
+                                              }
+                                          });
                                       }
                                   }
 
@@ -655,7 +675,6 @@ public class MainActivity extends AppCompatActivity {
         Toasty.warning(MainActivity.this,"请先添加课表").show();
     } else {
       header.setVisibility(View.VISIBLE);
-        NotificationInit(getItemPosition(dayOfWeek),getItemPosition(dayOfWeek +1));
     }
       if (dayOfWeek >1 && dayOfWeek < 6 )
           smoothMoveToPosition(recyclerView,getItemPosition(dayOfWeek));
@@ -689,5 +708,34 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).setMessage("将进入修改该课程界面").create();
         dialog.show();
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode)
+        {
+            case (1) :
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    int result = data.getIntExtra("result",0);
+                    if(result == 1){
+                        SharedPreferences userSettings = getSharedPreferences("setting", 0);
+                        setAcademicYear();
+                        int weekly =  Integer.parseInt(userSettings.getString("weekly","1"));
+                        queryInfoFromDB4uiChange(DBWeekPosition(weekly-1), academicYear);
+                    }
+                }
+                break;
+            }
+            case (2) :
+            {
+                if (resultCode == Activity.RESULT_OK)
+                {
+                    // TODO: Handle OK click.
+                }
+                break;
+            }
+        }
     }
 }
