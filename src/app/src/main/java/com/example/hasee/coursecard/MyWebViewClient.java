@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.util.Log;
 import android.webkit.CookieManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebResourceRequest;
@@ -31,6 +33,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -42,16 +45,17 @@ import rx.functions.Action1;
 import static android.content.ContentValues.TAG;
 
 public class MyWebViewClient extends WebViewClient {
-    String url;
-    WebView view;
-    Activity activity;
-    TextView textView;
-    int flag = 0;
-    private List<DBCourse> courses = new ArrayList<>();
+    private Activity activity;
+    boolean hasLoaded = false;
+    private List<DBCourse> courses1 = new ArrayList<>();
+    private List<DBCourse> courses10 = new ArrayList<>();
+    private List<DBCourse> courses11 = new ArrayList<>();
+    private List<DBCourse> courses20 = new ArrayList<>();
     public MyWebViewClient(Activity activity)
     {
         //  this.textView =textView;
         this.activity =activity;
+
     }
 
     /*  警告: [deprecation]
@@ -63,25 +67,38 @@ public class MyWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        view.loadUrl(String.valueOf(request.getUrl()));
-        Log.d("shouldOverrideUrlLoadin","shouldOverrideUrlLoading");
+        String urlStr = String.valueOf(request.getUrl());
+        /*
+        if(urlStr.indexOf("https://uems.sysu.edu.cn/jwxt/") != -1){
+            Log.d("web view","shouldOverrideUrlLoading but go uems.sysu.edu.cn/jwxt");
+            return false;
+        }
+
+         */
+        view.loadUrl(urlStr);
+        Log.d("web view","shouldOverrideUrlLoading: " + urlStr);
         return true;
     }
 
     public void onPageFinished(WebView view, String url) {
-
+        Log.d("web view","on page finished");
         CookieManager cookieManager = CookieManager.getInstance();
         String CookieStr = cookieManager.getCookie(url);
         Common.cookie = CookieStr;
         if(CookieStr != null)
             if(CookieStr.contains("LYSESSIONID") && CookieStr.contains("user")) {
-                Log.d("msg", CookieStr);
-                String[] weeklys = {"1,9","10","11,19","20"};
-                for (String i: weeklys)
-                    Onclick4Data(i,Common.academic);
+                if(!hasLoaded){
+                    String[] weeklys = {"1,9","10","11,19","20"};
+                    for (String i: weeklys)
+                        Onclick4Data(i,Common.academic);
+                    hasLoaded = true;
+                }
+
             }
 
     }
+
+
     //githubapi接口
 //    https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
     public interface GitHubService {
@@ -131,10 +148,12 @@ public class MyWebViewClient extends WebViewClient {
         GitHubService gitHubService = retrofit.create(GitHubService.class);
         Observable<JsonRootBean> observable = gitHubService.getRepo(week[0],academic);
         Call<JsonRootBean> call = gitHubService.getRepo1(week[0], academic);
+
         Log.i("Onclick4Data: ", call.request().url().toString());
+
         observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<JsonRootBean>() {
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<JsonRootBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d("HTTPx","onSubscribe");
@@ -143,52 +162,87 @@ public class MyWebViewClient extends WebViewClient {
                     @Override
                     public void onNext(JsonRootBean jsonRootBean) {
                         Log.d("HTTPx", "onNext");
-                        courses.clear();
+                        if(jsonRootBean.getCode() != 200) {
+                            Log.d("HTTPx", "code is not 200");
+                            return;
+                        }
+                        int index = Integer.parseInt(week[0]);
+                        courses(index).clear();
                         for (int i = 0; i < jsonRootBean.getData().size(); i++) {
                             Data data = jsonRootBean.getData().get(i);
-                            for (int j = Integer.parseInt(week[0]); week.length > 1 ? j < Integer.parseInt(week[1])+1 : j < j + 1; j++) {
+                            Log.d("data info",week[0]+" :"+
+                                    data.getFriday()+data.getMonday()+data.getThursday()+data.getTuesday()+data.getWednesday()+data.getSection());
+
                                 if (!data.getMonday().equals("null") && data.getSection() % 2 != 0) {
                                     String[] temp = InfoConvert(data.getMonday());
-                                    courses.add(new DBCourse(academic, "星期一", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
+                                    courses(index).add(new DBCourse(academic, "星期一", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
                                 }
                                 if (!data.getTuesday().equals("null") && data.getSection() % 2 > 0) {
                                     String[] temp = InfoConvert(data.getTuesday());
-                                    courses.add(new DBCourse(academic, "星期二", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
+                                    courses(index).add(new DBCourse(academic, "星期二", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
                                 }
                                 if (!data.getWednesday().equals("null") && data.getSection() % 2 > 0) {
                                     String[] temp = InfoConvert(data.getWednesday());
-                                    courses.add(new DBCourse(academic, "星期三", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
+                                    courses(index).add(new DBCourse(academic, "星期三", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
                                 }
                                 if (!data.getThursday().equals("null") && data.getSection() % 2 > 0) {
                                     String[] temp = InfoConvert(data.getThursday());
-                                    courses.add(new DBCourse(academic, "星期四", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
+                                    courses(index).add(new DBCourse(academic, "星期四", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
                                 }
                                 if (!data.getFriday().equals("null") && data.getSection() % 2 > 0) {
                                     String[] temp = InfoConvert(data.getFriday());
-                                    courses.add(new DBCourse(academic, "星期五", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, j));
+                                    courses(index).add(new DBCourse(academic, "星期五", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
                                 }
-                            }
+
                         }
-                        Log.d("class","weekly: "+ weekly +" ,courses number :"+ Integer.toString(courses.size()));
+                        Log.d("on next","weekly: "+ weekly +" ,courses number :"+ courses(index).size());
                     }
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
-                        Toasty.error(activity, "获取数据失败", Toast.LENGTH_LONG).show();
-                        Log.e("error","error");
+                        Toasty.error(activity, "获取数据失败 :\n"+e.getMessage(), Toast.LENGTH_LONG).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toasty.error(activity, "请连接校园网使用", Toast.LENGTH_LONG).show();
+                            }
+                        },3000);
+                        Common.cookie = "";
+                        CookieManager cookieManager = CookieManager.getInstance();
+                        cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
+                            @Override
+                            public void onReceiveValue(Boolean value) {
+                                Log.d("web view error","remove cookie value:" + value);
+                            }
+                        });
                     }
                     @Override
                     public void onComplete() {
-                        Log.d("Complete","on complete");
-                        Utils.insert(activity,courses);
+                        Log.d("web view","on complete");
+                        final int index = Integer.parseInt(week[0]);
+                        int delay = 0;
+                        if(index == 11) delay = 2000;
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Utils.insert(activity,courses(index));
+                            }
+                        },delay);
                         Common.statecode = "OK";
                     }
                 });
     }
 
+    private List<DBCourse> courses(int index){
+        if(index == 1) return courses1;
+        else if(index == 10) return courses10;
+        else if(index == 11) return courses11;
+        else if(index == 20) return courses20;
+        else return null;
+    }
+
     public class AddCookiesInterceptor implements Interceptor {
         private Context context;
-
         public AddCookiesInterceptor(Context context) {
             super();
             this.context = context;
@@ -199,7 +253,6 @@ public class MyWebViewClient extends WebViewClient {
 
             final Request.Builder builder = chain.request().newBuilder();
             SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
-            //最近在学习RxJava,这里用了RxJava的相关API大家可以忽略,用自己逻辑实现即可
             //使用已保存的cookie获取信息，可以省略登录步骤
             rx.Observable.just(sharedPreferences.getString("cookie", ""))
                     .subscribe(new Action1<String>() {
@@ -207,7 +260,7 @@ public class MyWebViewClient extends WebViewClient {
                         public void call(String cookie) {
                             //添加cookie
                             cookie = Common.cookie;
-                            Log.d("cookies",cookie);
+                            Log.d("intercept cookies",cookie);
                             builder.addHeader("Cookie", cookie);
                         }
                     });

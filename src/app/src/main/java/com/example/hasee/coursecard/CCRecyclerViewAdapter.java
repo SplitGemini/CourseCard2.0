@@ -13,7 +13,7 @@ public abstract class CCRecyclerViewAdapter extends RecyclerView.Adapter {
   private Context context;
   private int layoutId;
   protected ArrayList<Course> courses;
-  private OnItemClickListener onItemClickListener;
+  public OnItemClickListener onItemClickListener;
   
   public CCRecyclerViewAdapter(Context context, int layoutId, List<Course> courses) {
     this.context = context;

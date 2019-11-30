@@ -74,6 +74,9 @@ public abstract class SortedAdapter extends RecyclerView.Adapter {
   public void clear() {
     this.schedules.clear();
   }
+  public void remove(int position) {
+    schedules.removeItemAt(position);
+  }
 
   public Schedule getItem(int position) {
     return schedules == null ? null : schedules.get(position);

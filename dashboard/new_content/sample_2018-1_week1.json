@@ -1,0 +1,57 @@
+{
+	"code": 200,
+	"data": [{
+		"wednesday": "电子政务导论,毛明志,教学大楼B栋东B205",
+		"friday": "电子政务导论,毛明志,教学大楼B栋东B205",
+		"section": 1,
+		"weekly": 1
+	}, {
+		"wednesday": "电子政务导论,毛明志,教学大楼B栋东B205",
+		"friday": "电子政务导论,毛明志,教学大楼B栋东B205",
+		"section": 2,
+		"weekly": 1
+	}, {
+		"tuesday": "编译原理,常会友,教学大楼B栋东B102",
+		"wednesday": "计算机网络实验,王盛邦,实验中心大楼D栋东校实验中心D502",
+		"thursday": "嵌入式系统结构与设计,吴筠,实验中心大楼D栋D501",
+		"section": 5,
+		"weekly": 1
+	}, {
+		"tuesday": "编译原理,常会友,教学大楼B栋东B102",
+		"wednesday": "计算机网络实验,王盛邦,实验中心大楼D栋东校实验中心D502",
+		"thursday": "嵌入式系统结构与设计,吴筠,实验中心大楼D栋D501",
+		"section": 6,
+		"weekly": 1
+	}, {
+		"tuesday": "嵌入式系统结构与设计,吴筠,实验中心大楼D栋D501",
+		"thursday": "多媒体技术,杨猛,教学大楼B栋东B302",
+		"friday": "实时软件系统导论,Eun Young Kang,教学大楼B栋东B102",
+		"section": 7,
+		"weekly": 1,
+		"monday": "计算机网络,吴迪,教学大楼C栋东C103"
+	}, {
+		"tuesday": "嵌入式系统结构与设计,吴筠,实验中心大楼D栋D501",
+		"thursday": "多媒体技术,杨猛,教学大楼B栋东B302",
+		"friday": "实时软件系统导论,Eun Young Kang,教学大楼B栋东B102",
+		"section": 8,
+		"weekly": 1,
+		"monday": "计算机网络,吴迪,教学大楼C栋东C103"
+	}, {
+		"tuesday": "多媒体技术,杨猛,教学大楼A栋东A207",
+		"thursday": "媒体策划与数字编辑（核心通识）,鞠英辉,教学大楼B栋东B301",
+		"friday": "ERP理论与实践,常会友,教学大楼A栋东A207",
+		"section": 9,
+		"weekly": 1
+	}, {
+		"tuesday": "多媒体技术,杨猛,教学大楼A栋东A207",
+		"thursday": "媒体策划与数字编辑（核心通识）,鞠英辉,教学大楼B栋东B301",
+		"friday": "ERP理论与实践,常会友,教学大楼A栋东A207",
+		"section": 10,
+		"weekly": 1,
+		"monday": "器官重建与组织再生,龚逸鸿,教学大楼B栋东B502"
+	}, {
+		"section": 11,
+		"weekly": 1,
+		"monday": "器官重建与组织再生,龚逸鸿,教学大楼B栋东B502"
+	}]
+}

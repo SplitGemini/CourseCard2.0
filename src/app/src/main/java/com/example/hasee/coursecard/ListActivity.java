@@ -2,6 +2,7 @@ package com.example.hasee.coursecard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -22,8 +23,10 @@ import android.content.DialogInterface.OnClickListener;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.example.hasee.coursecard.database.CourseDao;
 import com.example.hasee.coursecard.database.CourseDatabase;
 import com.example.hasee.coursecard.database.DBCourse;
+import com.example.hasee.coursecard.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +78,6 @@ public class ListActivity extends AppCompatActivity {
     // default schedules
     final List<Schedule> schedules = new ArrayList<>();
     Schedule tempx;
-      List<DBCourse> all1 = CourseDatabase.getInstance(this).getCourseDao().getAll();
-      Log.i("All year size = ", "" + all1.size());
 
       List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
     for (String str : all) {
@@ -91,7 +92,7 @@ public class ListActivity extends AppCompatActivity {
             tempx = new Schedule(str1[0] + "第三学期");
             tempx.setTerm(str);
         }
-        Log.i("Academic year -=-=- ", tempx.getTerm());
+        Log.d("Academic year -=-=- ", tempx.getTerm());
         schedules.add(tempx);
     }
 
@@ -113,13 +114,13 @@ public class ListActivity extends AppCompatActivity {
               View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
               if (childView != null) {
                   int position = recyclerView.getChildLayoutPosition(childView);
-                  Log.d(getApplication().toString(), "single click:" + position);
+                  Log.d("list view", "single click:" + position);
                   List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
                   Intent intent = new Intent();
                   intent.putExtra("academic", adapter.getItem(position).getTerm());
                   Common.academic = adapter.getItem(position).getTerm();
-                  Log.d("all:size ", all.size() + "");
-                  Log.d("academic: ",adapter.getItem(position).getTerm());
+                  Log.d("academic year all:size", all.size() + "");
+                  Log.d("list view academic: ",adapter.getItem(position).getTerm());
                   for (String str : all) {
                       if (adapter.getItem(position).getTerm().equals(str)) {
                           intent.setClass(ListActivity.this,MainActivity.class);
@@ -140,7 +141,7 @@ public class ListActivity extends AppCompatActivity {
               View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
               if (childView != null) {
                   int position = recyclerView.getChildLayoutPosition(childView);
-                  Log.d(getApplication().toString(), "long click:" + position);
+                  Log.d("list view", "long click:" + position);
                   showAlertDialog(position);
               }
           }
@@ -197,19 +198,6 @@ public class ListActivity extends AppCompatActivity {
             temp.setTerm(item1 + "-" + "3");
             academicYear = item1 + "-" + "3";
         }
-        /*
-        if (academicYear.compareTo("2017-2") < 0){
-            Toasty.warning(ListActivity.this,"无法查询"+item1+item2+"课表").show();
-            return;
-        }
-
-         */
-//          Log.d("onOptionsSelect", "onOptionsSelect: " + academicYear);
-//        String[] weeklys = {"1,18"};
-//          Log.d("HTTPS",temp.getTerm());
-//        for (String i: weeklys)
-//            Onclick4Data(i,temp.getTerm());
-//        Toast.makeText(ListActivity.this, academicYear, Toast.LENGTH_SHORT).show();
           List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
           for (String str : all) {
               if (temp.getTerm().equals(str)) {
@@ -233,7 +221,7 @@ public class ListActivity extends AppCompatActivity {
         pvOptions.show();
       }
     });
-      Log.i("onCreate", ": notify data set changed()");
+      Log.d("list view onCreate", ": notify data set changed()");
     adapter.notifyDataSetChanged();
   }
 
@@ -245,10 +233,21 @@ public class ListActivity extends AppCompatActivity {
                   public void onClick(DialogInterface dialog, int which) {
                       //处理确认按钮的点击事件
                       String deleteAcademic = adapter.getItem(position).getTerm();
-                      Log.d("delete academic: ",deleteAcademic);
-                      Toasty.success(ListActivity.this,"删除成功").show();
-                      //CourseDatabase.getInstance(ListActivity.this).getCourseDao().deleteCourseByAcademicYears(deleteAcademic);
-                      //adapter.notifyDataSetChanged();
+                      Log.d("list view delete:",deleteAcademic);
+                      Utils.deletePage(ListActivity.this,deleteAcademic);
+                      new Handler().postDelayed(new Runnable() {
+                          @Override
+                          public void run() {
+                              /**
+                               * 延时执行的代码
+                               */
+                              adapter.remove(position);
+                              adapter.notifyItemRemoved(position);
+                              adapter.notifyDataSetChanged();
+                              Log.d("list view","year size delete,now ："+adapter.getItemCount());
+                              Toasty.success(ListActivity.this,"删除成功").show();
+                          }
+                      },1000);
                   }
               }).setMessage("将删除该学期所有课程，确认删除？").create();
       dialog.show();

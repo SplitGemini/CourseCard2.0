@@ -7,7 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 
 public class CASActivity extends AppCompatActivity {
-    WebView webView;
+    static public WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +19,13 @@ public class CASActivity extends AppCompatActivity {
     public void init() {
         //
     }
+
+    @Override
+    protected void onDestroy(){
+        webView.goBack();
+        super.onDestroy();
+    }
+
     public void getInfoFromWeb() {
 //        Log.d("msg",Integer.toString(checkSelfPermission(Manifest.permission.INTERNET)));
         WebSettings webSettings = webView.getSettings();

@@ -29,7 +29,7 @@
 
     <string name="appbar_right_info">选择周</string>
     <string name="appbar_left_info">菜单</string>
-    <string name="appbar_left_menu_1">添加与切换课程表</string>
+    <string name="appbar_left_menu_1">添加、删除与切换课程表</string>
     <string name="appbar_left_menu_2">在该课程表添加课程</string>
     <string name="activity_info_edit_btn">删除该课程</string>
     <string name="activity_list_btn">添加</string>

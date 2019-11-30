@@ -3,8 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/button2"
@@ -16,7 +15,7 @@
         android:paddingEnd="0dp"
         android:text="@string/appbar_left_menu_1"
         android:textColor="@color/item_schedule_name_font"
-        android:background="@color/header_bg"/>
+        android:background="@drawable/back_btn_bg"/>
 
     <Button
         android:id="@+id/button3"
@@ -24,9 +23,10 @@
         android:layout_height="150px"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/button2"
+        android:layout_marginTop="@dimen/activity_back_btn_margin"
         android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:text="@string/appbar_left_menu_2"
         android:textColor="@color/item_schedule_name_font"
-        android:background="@color/header_bg"/>
+        android:background="@drawable/back_btn_bg"/>
 </RelativeLayout>

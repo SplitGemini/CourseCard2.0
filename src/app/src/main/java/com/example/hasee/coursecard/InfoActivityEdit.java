@@ -38,6 +38,7 @@ public class InfoActivityEdit extends AppCompatActivity {
     private Button button;
     private NoteDao noteDao;
     private Notes notes;
+    private boolean isDelete = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +97,8 @@ public class InfoActivityEdit extends AppCompatActivity {
                 break;
         }
         cv.setCardBackgroundColor(getColor(color_id));
-        button.setBackgroundColor(getColor(color_id));
+        //button.setBackgroundColor(getColor(color_id));
+
         // info
         name.setText(course.getName());
         teacher.setText(course.getTeacher());
@@ -170,7 +172,8 @@ public class InfoActivityEdit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("delete course","delete course: " + course.getName());
-                Toasty.success(InfoActivityEdit.this,"删除成功");
+                isDelete = true;
+
                 onBackPressed();
             }
         });
@@ -228,8 +231,9 @@ public class InfoActivityEdit extends AppCompatActivity {
             im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
             notes.setNotes(note.getText().toString());
             noteDao.insertNote(notes);
-//      Toast.makeText(this, "备注更新完成！", Toast.LENGTH_LONG).show();
-            Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
+            if(isDelete)
+                Toasty.success(InfoActivityEdit.this,"删除成功");
+            else Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
         }
     }
 }

@@ -133,10 +133,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/activity_info_edit_tv_note"
                 android:autofillHints="Notes"
-                android:inputType="textUri|textShortMessage|textLongMessage|none|textMultiLine|number|text|textImeMultiLine"
+                android:inputType="none|textMultiLine|text|textImeMultiLine"
                 android:textColor="@color/activity_info_note_font"
                 android:textSize="@dimen/activity_info_note_font" tools:targetApi="o"
-                android:maxLines="4"/>
+                android:maxLines="8"/>
 
             <ImageView
                 android:id="@+id/iv_gumball_edit"

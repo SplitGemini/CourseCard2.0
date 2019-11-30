@@ -15,7 +15,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +22,6 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.PopupWindow;
 import android.widget.Button;
 import android.app.AlertDialog;
@@ -37,7 +35,6 @@ import com.example.hasee.coursecard.database.DBCourse;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
   private GestureDetector gestureDetector;
   private boolean init;
   private NotificationManager notificationManager;
-  private int year,month,day,hour,minute,second,week,mToPosition;
+  private int year,month,day,hour,minute,second, dayOfWeek,mToPosition;
   private Boolean mShouldScroll = false;
   private String academicYear = "2019-1";
   private List<Course> Mcourse;
@@ -117,16 +114,16 @@ public class MainActivity extends AppCompatActivity {
         if (init) {
           init = false;
         } else {
-          queryInfoFromDB4uiChange(position+1,academicYear);
+          queryInfoFromDB4uiChange(DBWeekPosition(position),academicYear);
             SharedPreferences userSettings = getSharedPreferences("setting", 0);
             SharedPreferences.Editor editor = userSettings.edit();
             //保持当前选择周数
             editor.putString("weekly",Integer.toString(position+1));
             editor.apply();
             //不是星期一和星期六才滚
-            if(week > 1 && week < 6)
-                smoothMoveToPosition(recyclerView,getItemPosition(week));
-            Log.d("Spinner recycle view", "onItemSelected: " + week);
+            if(dayOfWeek > 1 && dayOfWeek < 6)
+                smoothMoveToPosition(recyclerView,getItemPosition(dayOfWeek));
+            Log.d("Spinner recycle view", "onItemSelected: " + dayOfWeek);
         }
       }
       @Override
@@ -236,10 +233,26 @@ public class MainActivity extends AppCompatActivity {
       }
     };
 
+      adapter.setOnItemClickListener(new CCRecyclerViewAdapter.OnItemClickListener() {
+          @Override
+          public void onClick(int position) {
+              Course course = adapter.getItem(position);
+              if (!course.isHeader()) {
+                  Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                  Bundle bundle = new Bundle();
+                  bundle.putSerializable("Course", course);
+                  intent.putExtra("Course", bundle);
+                  startActivity(intent);
+              }
+          }
+      });
 
       gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener(){
           @Override
           public boolean onSingleTapUp(MotionEvent e){
+
+              /*
+              //同样起作用，但是感觉浪费了adapter里写的内容，
               View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
               if (childView != null) {
                   int position = recyclerView.getChildLayoutPosition(childView);
@@ -255,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                   }
                   return true;
               }
+               */
+              recyclerView.performClick();
               return super.onSingleTapUp(e);
           }
           @Override
@@ -297,7 +312,7 @@ public class MainActivity extends AppCompatActivity {
           checkPopupWindows();
           if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
               mShouldScroll = false;
-              if (week >1 && week <= 6 )
+              if (dayOfWeek >1 && dayOfWeek <= 6 )
                 smoothMoveToPosition(recyclerView, mToPosition);
           }
       }
@@ -310,21 +325,30 @@ public class MainActivity extends AppCompatActivity {
        getTime();
     if (tag) {
         SharedPreferences userSettings = getSharedPreferences("setting", 0);
-        academicYear = userSettings.getString("academic","2018-1");
+        academicYear = userSettings.getString("academic","2019-1");
         int weekly =  Integer.parseInt(userSettings.getString("weekly","1"));
-        Log.d("now week number :", academicYear + weekly);
+        Log.d("now dayOfWeek number", "academic year: " + academicYear+" weekly: " + weekly);
         spinner.setSelection(weekly-1);
-        queryInfoFromDB4uiChange(weekly, academicYear);
+        queryInfoFromDB4uiChange(DBWeekPosition(weekly-1), academicYear);
         if (adapter.getItemCount() != 0)
-          NotificationInit(getItemPosition(week),getItemPosition(week+1));
+          NotificationInit(getItemPosition(dayOfWeek),getItemPosition(dayOfWeek +1));
         else {
 //          MainActivity.this.startActivity(new Intent(MainActivity.this,ListActivity.class));
           Toasty.warning(MainActivity.this,"请先添加课表").show();
         }
-        if (week >1 && week < 6 )
-        smoothMoveToPosition(recyclerView,getItemPosition(week));
+        if (dayOfWeek >1 && dayOfWeek < 6 )
+        smoothMoveToPosition(recyclerView,getItemPosition(dayOfWeek));
     }
 
+  }
+
+  private int DBWeekPosition(int position){
+      int p;
+      if(position >= 0 && position <= 8) p = 1;
+      else if(position == 9) p = 10;
+      else if(position >= 10 && position <= 18) p = 11;
+      else p = 20;
+      return p;
   }
     private void checkPopupWindows(){
         if (popupWindow != null && popupWindow.isShowing()) {
@@ -400,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
     int next_hour = 0,next_minute = 0;
 
     getTime();
-    Log.d("week: ",week+" "+start +" "+ end);
+    Log.d("dayOfWeek: ", dayOfWeek +" "+start +" "+ end);
     if (start > 0 && end <= 0)
         end = adapter.getItemCount();
     if (start == -1 ) {
@@ -500,10 +524,16 @@ public class MainActivity extends AppCompatActivity {
     hour = calendar.get(Calendar.HOUR_OF_DAY);
     minute = calendar.get(Calendar.MINUTE);
     second = calendar.get(Calendar.SECOND);
-    week = calendar.get(Calendar.DAY_OF_WEEK);
+    dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
   }
 
   public void queryInfoFromDB4uiChange(int weekly, String academicYear) {
+      if(!CourseDatabase.getInstance(MainActivity.this).getCourseDao().getAcademicYears().contains(academicYear)){
+          adapter.clear();
+          adapter.notifyDataSetChanged();
+          header.setVisibility(View.INVISIBLE);
+          return;
+      }
     Mcourse = new ArrayList<>();
 //    String[] weekdayInCh = this.getResources().getStringArray(R.array.weekday_ch_zn);
     String[] weekdayInCh = { "", "星期一", "星期二", "星期三", "星期四", "星期五" };
@@ -550,7 +580,7 @@ public class MainActivity extends AppCompatActivity {
 
     if (position < firstItem) {
         // 如果跳转位置在第一个可见位置之前，就smoothScrollToPosition可以直接跳转
-        if (week >1 && week < 6 )
+        if (dayOfWeek >1 && dayOfWeek < 6 )
             mRecyclerView.smoothScrollToPosition(position);
     } else if (position <= lastItem) {
         // 跳转位置在第一个可见项之后，最后一个可见项之前
@@ -563,7 +593,7 @@ public class MainActivity extends AppCompatActivity {
     } else {
         // 如果要跳转的位置在最后可见项之后，则先调用smoothScrollToPosition将要跳转的位置滚动到可见位置
         // 再通过onScrollStateChanged控制再次调用smoothMoveToPosition，执行上一个判断中的方法
-        if (week >1 && week < 6 )
+        if (dayOfWeek >1 && dayOfWeek < 6 )
             mRecyclerView.smoothScrollToPosition(position);
         mToPosition = position;
         //重置自动滑动到当天的flag
@@ -612,16 +642,23 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onResume() {
     super.onResume();
-
-    Log.d("onResume: ", Boolean.toString(this.getIntent().getStringExtra("academic") == null));
+      SharedPreferences userSettings = getSharedPreferences("setting", 0);
+      setAcademicYear();
+      int weekly =  Integer.parseInt(userSettings.getString("weekly","1"));
+      Log.d("now dayOfWeek number", "academic year: " + academicYear+" weekly: " + weekly);
+      spinner.setSelection(weekly-1);
+      Log.d("onResume", Boolean.toString(this.getIntent().getStringExtra("academic") == null));
     //  Toast
-    setAcademicYear();
-    queryInfoFromDB4uiChange(1,academicYear);
+      queryInfoFromDB4uiChange(DBWeekPosition(weekly-1), academicYear);
     if (adapter.getItemCount() == 0) {
       header.setVisibility(View.INVISIBLE);
+        Toasty.warning(MainActivity.this,"请先添加课表").show();
     } else {
       header.setVisibility(View.VISIBLE);
+        NotificationInit(getItemPosition(dayOfWeek),getItemPosition(dayOfWeek +1));
     }
+      if (dayOfWeek >1 && dayOfWeek < 6 )
+          smoothMoveToPosition(recyclerView,getItemPosition(dayOfWeek));
   }
 
   @Override
