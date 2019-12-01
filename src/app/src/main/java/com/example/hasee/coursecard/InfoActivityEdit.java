@@ -101,7 +101,7 @@ public class InfoActivityEdit extends AppCompatActivity {
                 break;
         }
         cv.setCardBackgroundColor(getColor(color_id));
-        //button.setBackgroundColor(getColor(color_id));
+        button.setBackgroundColor(getColor(color_id));
 
         // info
         name.setText(course.getName());
@@ -110,7 +110,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         String time_text = course.getWeekday() + " " + getString(time_id);
         time.setText(time_text);
         week.setText(course.getWeek());
-        //note.bringToFront();
+        note.clearFocus();
 
         // gumball
         int res_id, msg_id;
@@ -175,7 +175,6 @@ public class InfoActivityEdit extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 showAlertDialog();
                 //onBackPressed();
             }
@@ -226,6 +225,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         // 如果焦点不是EditText则忽略
         return false;
     }
+
     /**
      * 弹出对话框选择进入修改课程页面
      *
@@ -244,11 +244,12 @@ public class InfoActivityEdit extends AppCompatActivity {
                         result.putExtra("result", 1);
                         setResult(RESULT_OK, result);
                         finish();
-                        Toasty.success(InfoActivityEdit.this,"删除成功");
+                        Toasty.success(InfoActivityEdit.this,"删除成功",Toast.LENGTH_LONG,true).show();
                     }
                 }).setMessage("所有该名称的课程都会被删除").create();
         dialog.show();
     }
+
     /**
      * 获取InputMethodManager，隐藏软键盘
      * @param token

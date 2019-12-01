@@ -33,6 +33,7 @@ import android.view.MotionEvent;
 import android.view.GestureDetector;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.widget.Toast;
 
 import com.example.hasee.coursecard.database.CourseDao;
 import com.example.hasee.coursecard.database.CourseDatabase;
@@ -428,9 +429,10 @@ public class MainActivity extends AppCompatActivity {
                                                @Override
                                                public void onReceiveValue(Boolean value) {
                                                    Log.d("main activity", "remove cookie value:" + value);
+                                                   Toasty.success(MainActivity.this, "删除cookie成功",Toast.LENGTH_LONG,true).show();
                                                }
                                            });
-                                           Toasty.success(MainActivity.this, "删除cookie成功");
+
                                        }
                                    }
 

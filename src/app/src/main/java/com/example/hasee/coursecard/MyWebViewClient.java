@@ -77,7 +77,7 @@ public class MyWebViewClient extends WebViewClient {
          */
         view.loadUrl(urlStr);
         Log.d("web view","shouldOverrideUrlLoading: " + urlStr);
-        return true;
+        return false;
     }
 
     public void onPageFinished(WebView view, String url) {
@@ -100,7 +100,7 @@ public class MyWebViewClient extends WebViewClient {
 
 
     //githubapi接口
-//    https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
+//    https://jwxt.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
     public interface GitHubService {
         @GET("/jwxt/student-status/student-info/student-no-schedule")
         Observable<JsonRootBean> getRepo( @Query("weekly") String weekly, @Query("academicYear") String academic);
