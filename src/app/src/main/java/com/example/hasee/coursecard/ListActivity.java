@@ -23,6 +23,7 @@ import android.content.DialogInterface.OnClickListener;
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
+
 import com.example.hasee.coursecard.database.CourseDao;
 import com.example.hasee.coursecard.database.CourseDatabase;
 import com.example.hasee.coursecard.database.DBCourse;
@@ -33,17 +34,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
-import io.reactivex.Observable;
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.GET;
-import retrofit2.http.Path;
+
 
 
 public class ListActivity extends AppCompatActivity {

@@ -126,9 +126,10 @@ public class MyWebViewClient extends WebViewClient {
         }
         return temp;
     }
+
     // 获取json转换DBcourse插入数据库
     public void Onclick4Data(final String weekly, final String academic) {
-//        https://raw.githubusercontent.com/Gongzq5/TEST/master/no-schedule_academicYear=2018-1_weekly=9
+    //https://raw.githubusercontent.com/Gongzq5/TEST/master/no-schedule_academicYear=2018-1_weekly=9
         final String[] week = weekly.split(",");
         OkHttpClient build = new OkHttpClient.Builder()
                 .connectTimeout(3, TimeUnit.SECONDS)
@@ -250,7 +251,6 @@ public class MyWebViewClient extends WebViewClient {
 
         @Override
         public Response intercept(Chain chain) throws IOException {
-
             final Request.Builder builder = chain.request().newBuilder();
             SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
             //使用已保存的cookie获取信息，可以省略登录步骤

@@ -1,5 +1,7 @@
 <div align=center><img width = '550' height ='550' src ="img/icon.png"/></div>
-<center><font size="20">Course Card</font></center>
+
+<center><font size="60">Course Card</font></center>
+
 ## 应用简介
 
 Course Card是一款课程表应用。用户可以通过中大教务系统导入课程表，在日常生活中方便地查询每日课程。除此之外，Course Card还有课程提醒功能和备注功能，可以帮助用户合理安排时间。我们还留了一个彩蛋，如果用户足够幸运的话，还有机会在课程信息界面偶遇可爱的冈布奥。
@@ -40,6 +42,7 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 ### 中大课程表访问接口
 
 使用WebView显示中央身份验证服务页面：[在这](https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login)
+
 身份验证成功可以得到cookie，在请求头中添加cookie后，向中大教务系统请求课程数据：[在这](https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule)
 
 ### 数据库

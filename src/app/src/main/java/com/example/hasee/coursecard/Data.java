@@ -1,15 +1,5 @@
 package com.example.hasee.coursecard;
 
-
-/**
- * Copyright 2019 bejson.com
- */
-/**
- * Auto-generated: 2019-01-05 15:10:38
- *
- * @author bejson.com (i@bejson.com)
- * @website http://www.bejson.com/java2pojo/
- */
 public class Data {
 
     private String tuesday = "null" , thursday= "null"  , monday= "null"  , wednesday= "null"  , friday= "null"  ;

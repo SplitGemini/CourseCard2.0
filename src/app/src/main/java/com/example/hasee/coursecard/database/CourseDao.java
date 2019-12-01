@@ -7,19 +7,16 @@ import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
-import com.example.hasee.coursecard.Course;
 
 import java.util.List;
 
 @Dao
 public interface CourseDao {
-    @Update
-    public void updateCourseNote(DBCourse course);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public Long insertCourse(DBCourse course);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     public List<Long> insertCourses(List<DBCourse> courses);
 
     @Query("select * from COURSE")
@@ -52,14 +49,14 @@ public interface CourseDao {
     @Query("select distinct academicYear from COURSE")
     public List<String> getAcademicYears();
 
-    @Query("delete from COURSE where id = :id")
-    public void deleteCourseByID(String id);
-
     @Query("delete from COURSE where academicYear = :AcademicYear")
     public void deleteCourseByAcademicYear(String AcademicYear);
 
     @Delete
-    public int deleteCourse(DBCourse course);
+    public int deleteCourse(DBCourse dbCourse);
+
+    @Delete
+    public int deleteCourses(List<DBCourse> dbCourses);
 
     @Update
     public int updateCourse(DBCourse course);
