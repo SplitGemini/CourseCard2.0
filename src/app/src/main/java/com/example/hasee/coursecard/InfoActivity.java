@@ -158,7 +158,7 @@ public class InfoActivity extends AppCompatActivity {
     // get note by course
     Log.d("GET", "onCreate: Notedao get");
     noteDao = CourseDatabase.getInstance(this).getNoteDao();
-    notes = noteDao.getNotesByName(course.getName());
+    notes = noteDao.getNotesById(course.getId());
     if (notes == null) {
       notes = new Notes(course.getId(),course.getName(), "");
     }

@@ -162,13 +162,15 @@ public class Utils {
                 .subscribe(subscriber);
     }
 
-    static public void updateCourse(final Context context, final DBCourse course) {
+    static public void updateCourse(final Context context, final DBCourse course,final Notes notes) {
         final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
+        final NoteDao noteDao = CourseDatabase.getInstance(context).getNoteDao();
         Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
             @Override
             public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
                 Log.d("util","emitter updateCourse 1");
                 courseDao.updateCourse(course);
+                noteDao.insertNote(notes);
                 Log.d("util","emitter updateCourse 2");
                 emitter.onComplete();
             }
@@ -199,13 +201,15 @@ public class Utils {
                 .subscribe(subscriber);
     }
 
-    static public void newCourse(final Context context, final DBCourse course) {
+    static public void newCourse(final Context context, final DBCourse course,final Notes notes) {
         final CourseDao courseDao = CourseDatabase.getInstance(context).getCourseDao();
+        final NoteDao noteDao = CourseDatabase.getInstance(context).getNoteDao();
         Observable<Long> observable = Observable.create(new ObservableOnSubscribe<Long>() {
             @Override
             public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
                 Log.d("util","emitter newCourse 1");
                 courseDao.insertCourse(course);
+                noteDao.insertNote(notes);
                 Log.d("util","emitter newCourse 2");
                 emitter.onComplete();
             }

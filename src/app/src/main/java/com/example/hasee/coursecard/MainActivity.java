@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationManager notificationManager;
     private int hour, minute, dayOfWeek, mToPosition;
     private Boolean mShouldScroll = false;
-    private String academicYear = "2019-1";
+    static public String academicYear = "2019-1";
     private List<Course> Mcourse;
     private Integer debugCount = 0;
     private int weekly;
@@ -569,10 +569,7 @@ public class MainActivity extends AppCompatActivity {
 //    String[] weekdayInCh = this.getResources().getStringArray(R.array.weekday_ch_zn);
         String[] weekdayInCh = {"", "星期一", "星期二", "星期三", "星期四", "星期五"};
         for (int i = 1; i <= 5; i++) {
-            List<DBCourse> dbCourseList = CourseDatabase
-                    .getInstance(MainActivity.this)
-                    .getCourseDao()
-                    .getCourseByWeekday(queryAcademicYear, queryWeekly, weekdayInCh[i]);
+            List<DBCourse> dbCourseList = courseDao.getCourseByWeekday(queryAcademicYear, queryWeekly, weekdayInCh[i]);
             class DbcourseComparetor implements Comparator<DBCourse> {
                 @Override
                 public int compare(DBCourse d1, DBCourse d2) {

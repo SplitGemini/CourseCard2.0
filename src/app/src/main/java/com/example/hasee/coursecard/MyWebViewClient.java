@@ -100,7 +100,9 @@ public class MyWebViewClient extends WebViewClient {
 
 
     //githubapi接口
-//    https://jwxt.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
+    //该接口已废弃
+    //https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
+
     public interface GitHubService {
         @GET("/jwxt/student-status/student-info/student-no-schedule")
         Observable<JsonRootBean> getRepo( @Query("weekly") String weekly, @Query("academicYear") String academic);

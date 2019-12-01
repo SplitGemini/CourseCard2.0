@@ -93,11 +93,10 @@
                 android:layout_toEndOf="@+id/activity_info_edit_iv_time"
                 android:layout_toRightOf="@id/activity_info_edit_iv_time"
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
-                android:text="@string/activity_info_time_default"
                 android:textColor="@color/activity_info_time_font"
                 android:textSize="@dimen/activity_info_edit_time_font"
                 android:maxLines="1"
-                android:inputType="date|datetime"/>
+                android:inputType="date|datetime|none"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_week"

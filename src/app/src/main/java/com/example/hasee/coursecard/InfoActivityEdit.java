@@ -43,6 +43,8 @@ public class InfoActivityEdit extends AppCompatActivity {
     private NoteDao noteDao;
     private CourseDao courseDao;
     private Notes notes;
+    private DBCourse dbCourse;
+    private boolean isNew = false;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +55,15 @@ public class InfoActivityEdit extends AppCompatActivity {
         Bundle bundle = intent.getBundleExtra("Course_edit");
         course = (Course) bundle.getSerializable("Course_edit");
         courseDao = CourseDatabase.getInstance(this).getCourseDao();
+        dbCourse = new DBCourse(MainActivity.academicYear,course.getWeekday(),course.getName(),course.getTeacher(),
+                course.getPlace(),course.getTime(),1);
+        if(course.getId() == 0){
+            isNew = true;
+        }else {
+            dbCourse.setWeek(courseDao.getCourseById(course.getId()).getWeek());
+            dbCourse.setId(course.getId());
+        }
+
         // bg
         RelativeLayout layout = findViewById(R.id.activity_info_edit_layout);
         layout.getBackground().setAlpha(50);
@@ -101,14 +112,15 @@ public class InfoActivityEdit extends AppCompatActivity {
                 break;
         }
         cv.setCardBackgroundColor(getColor(color_id));
-        button.setBackgroundColor(getColor(color_id));
 
         // info
         name.setText(course.getName());
         teacher.setText(course.getTeacher());
         place.setText(course.getPlace());
+
+
         String time_text = course.getWeekday() + " " + getString(time_id);
-        time.setText(time_text);
+        //time.setText(time_text);
         week.setText(course.getWeek());
         note.clearFocus();
 
@@ -166,9 +178,9 @@ public class InfoActivityEdit extends AppCompatActivity {
         // get note by course
         Log.d("GET", "onCreate: Notedao get");
         noteDao = CourseDatabase.getInstance(this).getNoteDao();
-        notes = noteDao.getNotesByName(course.getName());
+        notes = noteDao.getNotesById(dbCourse.getId());
         if (notes == null) {
-            notes = new Notes(course.getId(),course.getName(), "");
+            notes = new Notes(dbCourse.getId(),course.getName(), "");
         }
         note.setText(notes.getNotes());
 
@@ -236,10 +248,7 @@ public class InfoActivityEdit extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("delete course","delete course: " + course.getName());
-                        List<DBCourse> dbCourseList = courseDao.getCoursesByName(course.getName());
-                        for(int i = 0;i < dbCourseList.size();i++){
-                            Utils.deleteCourse(getBaseContext(),dbCourseList.get(i));
-                        }
+                        Utils.deleteCourse(InfoActivityEdit.this,dbCourse);
                         Intent result = new Intent();
                         result.putExtra("result", 1);
                         setResult(RESULT_OK, result);
@@ -258,17 +267,47 @@ public class InfoActivityEdit extends AppCompatActivity {
         if (token != null) {
             InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             im.hideSoftInputFromWindow(token, InputMethodManager.HIDE_NOT_ALWAYS);
-            notes.setNotes(note.getText().toString());
-            noteDao.insertNote(notes);
+            save();
             Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
         }
     }
+
+    private void save(){
+        if(isNew){
+            Utils.newCourse(this,dbCourse,notes);
+        }else{
+            dbCourse.setPlace(place.getText().toString());
+            dbCourse.setName(name.getText().toString());
+            dbCourse.setTeacher(teacher.getText().toString());
+            Utils.updateCourse(this,dbCourse,notes);
+        }
+        notes.setNotes(note.getText().toString());
+    }
+
     @Override
     public void onBackPressed() {
         //super.onBackPressed();//注销该方法，相当于重写父类这个方法
-        Intent result = new Intent();
-        result.putExtra("result", 0);
-        setResult(RESULT_OK, result);
+        if(isNew){
+            Intent result = new Intent();
+            result.putExtra("result", 1);
+            setResult(RESULT_OK, result);
+            save();
+        }else{
+            Intent result = new Intent();
+            result.putExtra("result", 0);
+            setResult(RESULT_OK, result);
+        }
         finish();
+    }
+
+    private String getRandomString(int length){
+        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.\\[]{}!?@#$%^&*():;,";
+        Random random = new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i = 0;i < length;i ++){
+            int number = random.nextInt(str.length());
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 }

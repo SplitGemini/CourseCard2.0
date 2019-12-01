@@ -24,6 +24,9 @@ public interface NoteDao {
     @Query("select * from Notes where courseName = :courseName")
     public Notes getNotesByName(String courseName);
 
+    @Query("select * from Notes where id = :id")
+    public Notes getNotesById(Integer id);
+
     @Delete
     public int deleteNote(Notes note);
 }
