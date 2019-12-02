@@ -33,10 +33,16 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 <img src="img/9.png" width="180"/><img src="img/10.png" width="180"/><img src="img/11.png" width="180" /><img src="img/12.png" width="180" />
 </div>
 
-长按课程可以修改信息，修改后自动保存，修改依据是根据课程id修改，可修改所有内容，返回后自动保存
+长按课程可以修改信息或删除课程，修改依据是根据课程id修改，可修改所有内容，返回或删除后自动保存
 
 <div align="center">
 <img src="img/17.png" width="180"/><img src="img/18.png" width="180"/>
+</div>
+
+左上方菜单还有添加新课程按钮，课程允许重复，默认有部分信息，返回后自动创建
+
+<div align="center">
+<img src="img/19.png" width="180"/><img src="img/20.png" width="180"/><img src="img/21.png" width="180"/>
 </div>
 
 最后，用户进入课程信息界面时，有机会见到不同的冈布奥。

@@ -17,23 +17,42 @@
 ### 展示
 
 新建课程库
+
 ![](img/newCoursePage.gif)
 
 删除课程库
+
 ![](img/deleteCoursePage.gif)
 
 新建课程
+
 ![](img/newCourse.gif)
 
 修改课程
+
 ![](img/editCourse.gif)
 
 删除课程
+
 ![](img/deleteCourse.gif)
 
 点击通知跳转
+
 ![](img/touchNotification.gif)
 
+### 贡献
+
+贡献，SplitGemini
+
+![](img/contribute.png)
+
+对比原分支,16 commits, 84 files changed
+
+![](img/change.png)
+
+3182 additions
+
+![](img/diff.png)
 
 ### 问题
 
