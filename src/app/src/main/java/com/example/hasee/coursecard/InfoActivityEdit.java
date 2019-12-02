@@ -4,17 +4,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
@@ -25,18 +31,23 @@ import com.example.hasee.coursecard.database.DBCourse;
 import com.example.hasee.coursecard.database.NoteDao;
 import com.example.hasee.coursecard.database.Notes;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.ListIterator;
 import java.util.Random;
 import java.util.List;
 import es.dmoral.toasty.Toasty;
 
 public class InfoActivityEdit extends AppCompatActivity {
-    private Course course;
     private CardView cv;
     private EditText name;
     private EditText teacher;
     private EditText place;
-    private EditText time;
-    private EditText week;
+    private Spinner time_weekday;
+    private Spinner time_time;
+    private Spinner week;
     private EditText note;
     private ImageView gumball;
     private Button button;
@@ -45,15 +56,21 @@ public class InfoActivityEdit extends AppCompatActivity {
     private Notes notes;
     private DBCourse dbCourse;
     private boolean isNew = false;
+    final private List<String> weekList = new ArrayList<>();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_edit);
 
         // initialize
+        weekList.add("星期一");
+        weekList.add("星期二");
+        weekList.add("星期三");
+        weekList.add("星期四");
+        weekList.add("星期五");
         final Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("Course_edit");
-        course = (Course) bundle.getSerializable("Course_edit");
+        Course course = (Course) bundle.getSerializable("Course_edit");
         courseDao = CourseDatabase.getInstance(this).getCourseDao();
         dbCourse = new DBCourse(Common.academic,course.getWeekday(),course.getName(),course.getTeacher(),
                 course.getPlace(),course.getTime(),1);
@@ -73,60 +90,57 @@ public class InfoActivityEdit extends AppCompatActivity {
         name = findViewById(R.id.activity_info_edit_tv_name);
         teacher = findViewById(R.id.activity_info_edit_tv_teacher);
         place = findViewById(R.id.activity_info_edit_tv_place);
-        time = findViewById(R.id.activity_info_edit_tv_time);
+        time_weekday = findViewById(R.id.activity_info_edit_tv_time_week);
+        time_time = findViewById(R.id.activity_info_edit_tv_time_time);
         week = findViewById(R.id.activity_info_edit_tv_week);
         note = findViewById(R.id.activity_info_edit_edt_note);
         gumball = findViewById(R.id.iv_gumball_edit);
         button = findViewById(R.id.activity_info_edit_btn);
 
+        initSpinners();
+
         // color
-        int color_id, time_id;
+        int color_id;
         switch (course.getTime()) {
             case 1:
                 color_id = R.color.item_course_cv_bg1;
-                time_id = R.string.item_course_time1;
                 break;
             case 2:
                 color_id = R.color.item_course_cv_bg2;
-                time_id = R.string.item_course_time2;
                 break;
             case 3:
                 color_id = R.color.item_course_cv_bg3;
-                time_id = R.string.item_course_time3;
                 break;
             case 4:
                 color_id = R.color.item_course_cv_bg4;
-                time_id = R.string.item_course_time4;
                 break;
             case 5:
                 color_id = R.color.item_course_cv_bg5;
-                time_id = R.string.item_course_time5;
                 break;
             case 6:
                 color_id = R.color.item_course_cv_bg6;
-                time_id = R.string.item_course_time6;
                 break;
             default:
                 color_id = R.color.item_course_cv_bg_default;
-                time_id = R.string.item_course_time_default;
                 break;
         }
         cv.setCardBackgroundColor(getColor(color_id));
 
         // info
-        name.setText(course.getName());
-        teacher.setText(course.getTeacher());
-        if(isNew) place.setText(getRandomString(8));
-        else place.setText(course.getPlace());
-        String time_text = course.getWeekday() + " " + getString(time_id);
+        name.setText(dbCourse.getName());
+        teacher.setText(dbCourse.getTeacher());
+        place.setText(dbCourse.getPlace());
+        time_weekday.setSelection(weekList.indexOf(dbCourse.getWeekday()));
+        time_time.setSelection(dbCourse.getTime() - 1);
+        week.setSelection(week2Position(dbCourse.getWeek()));
+        //course.getWeekday() + " " + getString(time_id);
         //time.setText(time_text);
-        week.setText(course.getWeek());
         note.clearFocus();
 
         // gumball
         int res_id, msg_id;
         double P;
-        switch (course.getTime()) {
+        switch (dbCourse.getTime()) {
             case 1:
                 res_id = R.drawable.jianshi;
                 msg_id = R.string.gumball_jianshi;
@@ -179,7 +193,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         noteDao = CourseDatabase.getInstance(this).getNoteDao();
         notes = noteDao.getNotesById(dbCourse.getId());
         if (notes == null) {
-            notes = new Notes(dbCourse.getId(),course.getName(), "");
+            notes = new Notes(dbCourse.getId(),dbCourse.getName(), "");
         }
         note.setText(notes.getNotes());
 
@@ -188,6 +202,108 @@ public class InfoActivityEdit extends AppCompatActivity {
             public void onClick(View v) {
                 showAlertDialog();
                 //onBackPressed();
+            }
+        });
+    }
+
+    private int week2Position(int week){
+        if(week == 1) return 0;
+        if(week == 10) return 1;
+        if(week == 11) return 2;
+        if(week == 20) return 3;
+        return 0;
+    }
+
+    private int position2week(int position){
+        if(position == 0) return 1;
+        if(position == 1) return 10;
+        if(position == 2) return 11;
+        if(position == 3) return 20;
+        return 0;
+    }
+
+    private String timeToString(int time){
+        int time_id;
+        switch (time) {
+            case 1:
+                time_id = R.string.item_course_time1;
+                break;
+            case 2:
+                time_id = R.string.item_course_time2;
+                break;
+            case 3:
+                time_id = R.string.item_course_time3;
+                break;
+            case 4:
+                time_id = R.string.item_course_time4;
+                break;
+            case 5:
+                time_id = R.string.item_course_time5;
+                break;
+            case 6:
+                time_id = R.string.item_course_time6;
+                break;
+            default:
+                time_id = R.string.item_course_time_default;
+                break;
+        }
+        return getString(time_id);
+    }
+
+    private void initSpinners(){
+        List<String> data = new ArrayList<>();
+        for (int i = 0; i < 5; ++i) {
+            data.add(weekList.get(i));
+        }
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        time_weekday.setAdapter(arrayAdapter);
+        time_weekday.setClickable(true);
+        time_weekday.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dbCourse.setWeekday(weekList.get(position));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        data = new ArrayList<>();
+        for (int i = 1; i <= 6; ++i) {
+            data.add(timeToString(i));
+        }
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        time_time.setAdapter(arrayAdapter);
+        time_time.setClickable(true);
+        time_time.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dbCourse.setTime(position + 1);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        data = new ArrayList<>();
+        String[] tmp = new String[]{"1-9周","第10周","11-19周","第20周"};
+        for (int i = 0; i <= 3; ++i) {
+            data.add(tmp[i]);
+        }
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        week.setAdapter(arrayAdapter);
+        week.setClickable(true);
+        week.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                dbCourse.setWeek(position2week(position));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }
@@ -201,7 +317,7 @@ public class InfoActivityEdit extends AppCompatActivity {
                 .setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d("delete course","delete course: " + course.getName());
+                        Log.d("delete course","delete course: " + dbCourse.getName());
                         Utils.deleteCourse(InfoActivityEdit.this,dbCourse);
                         Intent result = new Intent();
                         result.putExtra("result", 1);
@@ -216,12 +332,12 @@ public class InfoActivityEdit extends AppCompatActivity {
 
     private void save(){
         notes.setNotes(note.getText().toString());
+        dbCourse.setPlace(place.getText().toString());
+        dbCourse.setName(name.getText().toString());
+        dbCourse.setTeacher(teacher.getText().toString());
         if(isNew){
             Utils.newCourse(this,dbCourse,notes);
         }else{
-            dbCourse.setPlace(place.getText().toString());
-            dbCourse.setName(name.getText().toString());
-            dbCourse.setTeacher(teacher.getText().toString());
             Utils.updateCourse(this,dbCourse,notes);
         }
         Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
@@ -230,27 +346,11 @@ public class InfoActivityEdit extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         //super.onBackPressed();//注销该方法，相当于重写父类这个方法
-        if(isNew){
-            Intent result = new Intent();
-            result.putExtra("result", 1);
-            setResult(RESULT_OK, result);
-        }else{
-            Intent result = new Intent();
-            result.putExtra("result", 0);
-            setResult(RESULT_OK, result);
-        }
+        Intent result = new Intent();
+        result.putExtra("result", 1);
+        setResult(RESULT_OK, result);
         save();
         finish();
     }
 
-    private String getRandomString(int length){
-        String str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.\\[]{}!?@#$%^&*():;,";
-        Random random = new Random();
-        StringBuffer sb=new StringBuffer();
-        for(int i = 0;i < length;i ++){
-            int number = random.nextInt(str.length());
-            sb.append(str.charAt(number));
-        }
-        return sb.toString();
-    }
 }
