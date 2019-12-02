@@ -40,7 +40,7 @@ import rx.functions.Action1;
 
 public class MyWebViewClientToGithub extends WebViewClient {
     private Activity activity;
-    private boolean hasLoaded = false;
+    private boolean hasLoaded;
     private List<DBCourse> courses1 = new ArrayList<>();
     private List<DBCourse> courses10 = new ArrayList<>();
     private List<DBCourse> courses11 = new ArrayList<>();
@@ -49,6 +49,7 @@ public class MyWebViewClientToGithub extends WebViewClient {
     {
         //  this.textView =textView;
         this.activity =activity;
+        hasLoaded = false;
 
     }
 
@@ -62,11 +63,8 @@ public class MyWebViewClientToGithub extends WebViewClient {
 
     public void onPageFinished(WebView view, String url) {
         Log.d("web view","on page finished");
-        CookieManager cookieManager = CookieManager.getInstance();
-        String CookieStr = cookieManager.getCookie(url);
-        Common.cookie = CookieStr;
         if(!hasLoaded){
-            String[] weeklys = {"1,9","10","11,19","20"};
+            String[] weeklys = {"1","10","11","20"};
             for (String i: weeklys)
                 Onclick4Data(i,Common.academic);
             hasLoaded = true;
@@ -76,10 +74,10 @@ public class MyWebViewClientToGithub extends WebViewClient {
 
     //githubapi接口
     public interface GitHubService {
-        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week/{weekly/}.json")
+        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week{weekly}.json")
         Observable<JsonRootBean> getRepo(@Path("weekly") String weekly);
 
-        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week/{weekly/}.json")
+        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week{weekly}.json")
         Call<JsonRootBean> getRepo1(@Path("weekly") String weekly);
     }
 
@@ -104,12 +102,10 @@ public class MyWebViewClientToGithub extends WebViewClient {
 
     // 获取json转换DBcourse插入数据库
     public void Onclick4Data(final String weekly, final String academic) {
-        final String[] week = weekly.split(",");
         OkHttpClient build = new OkHttpClient.Builder()
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(3, TimeUnit.SECONDS)
                 .writeTimeout(3, TimeUnit.SECONDS)
-                .addInterceptor(new MyWebViewClientToGithub.AddCookiesInterceptor(activity))
                 .build();
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -121,10 +117,10 @@ public class MyWebViewClientToGithub extends WebViewClient {
 
 
         MyWebViewClientToGithub.GitHubService gitHubService = retrofit.create(MyWebViewClientToGithub.GitHubService.class);
-        Observable<JsonRootBean> observable = gitHubService.getRepo(week[0]);
-        Call<JsonRootBean> call = gitHubService.getRepo1(week[0]);
-
-        Log.i("Onclick4Data: ", call.request().url().toString());
+        Observable<JsonRootBean> observable = gitHubService.getRepo(weekly);
+        Call<JsonRootBean> call = gitHubService.getRepo1(weekly);
+        String url = call.request().url().toString();
+        Log.i("Onclick4Data: ", url);
 
         observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -141,11 +137,11 @@ public class MyWebViewClientToGithub extends WebViewClient {
                             Log.d("HTTPx", "code is not 200");
                             return;
                         }
-                        int index = Integer.parseInt(week[0]);
+                        int index = Integer.parseInt(weekly);
                         courses(index).clear();
                         for (int i = 0; i < jsonRootBean.getData().size(); i++) {
                             Data data = jsonRootBean.getData().get(i);
-                            Log.d("data info",week[0]+" :"+
+                            Log.d("data info",weekly+" :"+
                                     data.getFriday()+data.getMonday()+data.getThursday()+data.getTuesday()+data.getWednesday()+data.getSection());
 
                             if (!data.getMonday().equals("null") && data.getSection() % 2 != 0) {
@@ -176,31 +172,18 @@ public class MyWebViewClientToGithub extends WebViewClient {
                     public void onError(Throwable e) {
                         e.printStackTrace();
                         Toasty.error(activity, "获取数据失败 :\n"+e.getMessage(), Toast.LENGTH_LONG).show();
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toasty.error(activity, "请连接校园网使用", Toast.LENGTH_LONG).show();
-                            }
-                        },3000);
-                        Common.cookie = "";
-                        CookieManager cookieManager = CookieManager.getInstance();
-                        cookieManager.removeAllCookies(new ValueCallback<Boolean>() {
-                            @Override
-                            public void onReceiveValue(Boolean value) {
-                                Log.d("web view error","remove cookie value:" + value);
-                            }
-                        });
                     }
                     @Override
                     public void onComplete() {
                         Log.d("web view","on complete");
-                        final int index = Integer.parseInt(week[0]);
+                        final int index = Integer.parseInt(weekly);
                         int delay = 0;
                         if(index == 11) delay = 2000;
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 Utils.insert(activity,courses(index));
+                                Toasty.success(activity, "获取数据成功",Toast.LENGTH_LONG).show();
                             }
                         },delay);
                         Common.statecode = "OK";
@@ -217,30 +200,4 @@ public class MyWebViewClientToGithub extends WebViewClient {
     }
 
 
-
-    public class AddCookiesInterceptor implements Interceptor {
-        private Context context;
-        public AddCookiesInterceptor(Context context) {
-            super();
-            this.context = context;
-        }
-
-        @Override
-        public Response intercept(Chain chain) throws IOException {
-            final Request.Builder builder = chain.request().newBuilder();
-            SharedPreferences sharedPreferences = context.getSharedPreferences("cookie", Context.MODE_PRIVATE);
-            //使用已保存的cookie获取信息，可以省略登录步骤
-            rx.Observable.just(sharedPreferences.getString("cookie", ""))
-                    .subscribe(new Action1<String>() {
-                        @Override
-                        public void call(String cookie) {
-                            //添加cookie
-                            cookie = Common.cookie;
-                            Log.d("intercept cookies",cookie);
-                            builder.addHeader("Cookie", cookie);
-                        }
-                    });
-            return chain.proceed(builder.build());
-        }
-    }
 }
