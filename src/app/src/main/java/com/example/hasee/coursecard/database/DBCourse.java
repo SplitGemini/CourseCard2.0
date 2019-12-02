@@ -53,6 +53,17 @@ public class DBCourse {
         this.week = week;
     }
 
+    @Ignore
+    public DBCourse(DBCourse course) {
+        this.academicYear = course.academicYear;
+        this.weekday = course.weekday;
+        this.name = course.name;
+        this.teacher = course.teacher;
+        this.place = course.place;
+        this.time = course.time;
+        this.week = course.week;
+    }
+
     public String getAcademicYear() {
         return academicYear;
     }

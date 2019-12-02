@@ -321,10 +321,12 @@ public class InfoActivityEdit extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d("delete course","delete course: " + dbCourse.getName());
-                        Utils.deleteCourse(InfoActivityEdit.this,dbCourse);
-                        Intent result = new Intent();
-                        result.putExtra("result", 1);
-                        setResult(RESULT_OK, result);
+                        if(!isNew) {
+                            Utils.deleteCourse(InfoActivityEdit.this, dbCourse);
+                            Intent result = new Intent();
+                            result.putExtra("result", 1);
+                            setResult(RESULT_OK, result);
+                        }
                         finish();
                         Toasty.success(InfoActivityEdit.this,"删除成功",Toast.LENGTH_LONG,true).show();
                     }
@@ -340,10 +342,12 @@ public class InfoActivityEdit extends AppCompatActivity {
         dbCourse.setTeacher(teacher.getText().toString());
         if(isNew){
             Utils.newCourse(this,dbCourse,notes);
+            Toasty.success(this, "课程添加完成！", Toast.LENGTH_LONG,true).show();
         }else{
             Utils.updateCourse(this,dbCourse,notes);
+            Toasty.success(this, "课程更新完成！", Toast.LENGTH_LONG,true).show();
         }
-        Toasty.success(this, "备注更新完成！", Toast.LENGTH_LONG,true).show();
+
     }
 
     @Override

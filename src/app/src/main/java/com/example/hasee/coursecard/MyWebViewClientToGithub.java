@@ -41,6 +41,7 @@ import rx.functions.Action1;
 public class MyWebViewClientToGithub extends WebViewClient {
     private Activity activity;
     private boolean hasLoaded;
+    //因为是异步读写，只用一个会造成读写重复
     private List<DBCourse> courses1 = new ArrayList<>();
     private List<DBCourse> courses10 = new ArrayList<>();
     private List<DBCourse> courses11 = new ArrayList<>();
@@ -183,7 +184,8 @@ public class MyWebViewClientToGithub extends WebViewClient {
                             @Override
                             public void run() {
                                 Utils.insert(activity,courses(index));
-                                Toasty.success(activity, "获取数据成功",Toast.LENGTH_LONG).show();
+                                if(index == 11)
+                                    Toasty.success(activity, "获取数据成功",Toast.LENGTH_LONG).show();
                             }
                         },delay);
                         Common.statecode = "OK";

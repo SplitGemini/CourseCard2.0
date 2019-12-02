@@ -46,6 +46,7 @@ import rx.functions.Action1;
 public class MyWebViewClient extends WebViewClient {
     private Activity activity;
     private boolean hasLoaded = false;
+    //因为是异步读写，只用一个会造成读写重复
     private List<DBCourse> courses1 = new ArrayList<>();
     private List<DBCourse> courses10 = new ArrayList<>();
     private List<DBCourse> courses11 = new ArrayList<>();

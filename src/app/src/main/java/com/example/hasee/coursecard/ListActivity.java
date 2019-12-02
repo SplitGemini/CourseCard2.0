@@ -72,19 +72,21 @@ public class ListActivity extends AppCompatActivity {
 
       List<String> all = CourseDatabase.getInstance(ListActivity.this).getCourseDao().getAcademicYears();
     for (String str : all) {
-        String[] str1 = str.split("-");
-        if (str1[1].equals("1")) {
-            tempx = new Schedule(str1[0] + "第一学期");
-            tempx.setTerm(str);
-        } else if (str1[1].equals("2")) {
-            tempx = new Schedule(str1[0] + "第二学期");
-            tempx.setTerm(str);
-        } else {
-            tempx = new Schedule(str1[0] + "第三学期");
-            tempx.setTerm(str);
+        if(str != null){
+            String[] str1 = str.split("-");
+            if (str1[1].equals("1")) {
+                tempx = new Schedule(str1[0] + "第一学期");
+                tempx.setTerm(str);
+            } else if (str1[1].equals("2")) {
+                tempx = new Schedule(str1[0] + "第二学期");
+                tempx.setTerm(str);
+            } else {
+                tempx = new Schedule(str1[0] + "第三学期");
+                tempx.setTerm(str);
+            }
+            Log.d("Academic year -=-=- ", tempx.getTerm());
+            schedules.add(tempx);
         }
-        Log.d("Academic year -=-=- ", tempx.getTerm());
-        schedules.add(tempx);
     }
 
     // adapter

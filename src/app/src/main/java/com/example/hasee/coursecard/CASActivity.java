@@ -43,7 +43,7 @@ public class CASActivity extends AppCompatActivity {
 
         //这个登录界面还能用，但是api已经失效了所以登录了也没用
         //webView.loadUrl("https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login");
-        webView.loadUrl("https://raw.githubusercontent.com/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/Description.html");
+        webView.loadUrl("https://splitgemini.github.io/Description.html");
 
         webView.setWebChromeClient(new WebChromeClient());
 

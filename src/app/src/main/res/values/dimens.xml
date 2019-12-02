@@ -33,10 +33,10 @@
     <dimen name="activity_info_iv_time_size">32dp</dimen>
     <dimen name="activity_info_iv_week_size">32dp</dimen>
     <dimen name="activity_info_iv_note_size">32dp</dimen>
-    <dimen name="activity_info_edit_iv_teacher_size">42dp</dimen>
-    <dimen name="activity_info_edit_iv_place_size">42dp</dimen>
-    <dimen name="activity_info_edit_iv_time_size">32dp</dimen>
-    <dimen name="activity_info_edit_iv_week_size">32dp</dimen>
+    <dimen name="activity_info_edit_iv_teacher_size">45dp</dimen>
+    <dimen name="activity_info_edit_iv_place_size">45dp</dimen>
+    <dimen name="activity_info_edit_iv_time_size">45dp</dimen>
+    <dimen name="activity_info_edit_iv_week_size">45dp</dimen>
     <dimen name="activity_info_edit_iv_note_size">32dp</dimen>
     <dimen name="activity_info_margin">20dp</dimen>
     <dimen name="activity_info_margin_small">10dp</dimen>

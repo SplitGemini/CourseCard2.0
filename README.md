@@ -1,6 +1,6 @@
 <div align=center><img width = '550' height ='550' src ="img/icon.png"/></div>
 
-<div align=center><font size="60">Course Card</font></div>
+<center><font size="7"> Course Card </font></center>
 
 ## 应用简介
 
@@ -33,10 +33,10 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 <img src="img/9.png" width="180"/><img src="img/10.png" width="180"/><img src="img/11.png" width="180" /><img src="img/12.png" width="180" />
 </div>
 
-长按课程可以修改信息，修改后自动保存，修改依据是根据课程id修改，可修改所有内容，只有在不包括笔记的所有内容有一门完全相同课程时修改不成功
+长按课程可以修改信息，修改后自动保存，修改依据是根据课程id修改，可修改所有内容，返回后自动保存
 
 <div align="center">
-<img src="img/17.png" width="180"/>
+<img src="img/17.png" width="180"/><img src="img/18.png" width="180"/>
 </div>
 
 最后，用户进入课程信息界面时，有机会见到不同的冈布奥。
@@ -44,6 +44,7 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 <div align="center">
 <img src="img/13.png" width="180"/><img src="img/14.png" width="180"/><img src="img/15.png" width="180"/>
 </div>
+
 ## 三层架构
 
 <img src="img/16.jpg" style="zoom:60%;" />
@@ -58,7 +59,7 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 
 身份验证成功可以得到cookie，在请求头中添加cookie后，向中大教务系统请求课程数据：[在这](https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule)
 
-因为中大教务系统网站更新，该api已在12月1日失效
+因为中大教务系统网站更新，该api已在12月1日失效，目前通过网络获取的课表为该repo里的测试用数据[在这](dashboard/new_content/sample)
 
 ### 数据库
 数据库建立Course表和Note表，分别存储课程信息和备注信息。

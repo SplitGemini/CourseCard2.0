@@ -49,6 +49,9 @@ public interface CourseDao {
     @Query("select distinct academicYear from COURSE")
     public List<String> getAcademicYears();
 
+    @Query("select distinct week from COURSE where name = :name")
+    public List<Integer> getWeek(String name);
+
     @Query("delete from COURSE where academicYear = :AcademicYear")
     public void deleteCourseByAcademicYear(String AcademicYear);
 

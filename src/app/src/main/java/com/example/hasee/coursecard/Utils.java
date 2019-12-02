@@ -163,6 +163,7 @@ public class Utils {
             public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
                 Log.d("util","emitter updateCourse 1");
                 courseDao.updateCourse(course);
+                noteDao.insertNote(notes);
                 Log.d("util","emitter updateCourse 2");
                 emitter.onComplete();
             }
@@ -174,7 +175,6 @@ public class Utils {
             }
             @Override
             public void onComplete() {
-                noteDao.insertNote(notes);
                 Log.d("util","updateCourse Oncompleted");
             }
 
@@ -202,6 +202,7 @@ public class Utils {
             public void subscribe(ObservableEmitter<Long> emitter) throws Exception {
                 Log.d("util","emitter newCourse 1");
                 courseDao.insertCourse(course);
+                noteDao.insertNote(notes);
                 Log.d("util","emitter newCourse 2");
                 emitter.onComplete();
             }
@@ -213,7 +214,6 @@ public class Utils {
             }
             @Override
             public void onComplete() {
-                noteDao.insertNote(notes);
                 Log.d("util","newCourse Oncompleted");
             }
 
