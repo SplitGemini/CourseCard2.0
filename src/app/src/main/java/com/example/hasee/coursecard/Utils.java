@@ -22,6 +22,7 @@ import java.util.List;
 //import rx.schedulers.Schedulers;
 
 //rx2
+import es.dmoral.toasty.Toasty;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -53,14 +54,6 @@ public class Utils {
             @Override
             public void onComplete() {
                 Log.d("util","insert Oncompleted");
-                for(int i = 0;i < courses.size();i++){
-                    Log.d("course info",courses.get(i).getAcademicYear() + "," +
-                            courses.get(i).getName() + "," +
-                            courses.get(i).getTeacher() + "," +
-                            courses.get(i).getPlace() + "," +
-                            courses.get(i).getWeekday() + "," +
-                            "第"+courses.get(i).getWeek() + "周," +  "第"+courses.get(i).getTime()+"节课");
-                }
                 if(courses.size() > 0)
                     if(courses.get(0).getWeek() == 11) {
                         CASActivity.webView.destroy();

@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private NotificationManager notificationManager;
     private int hour, minute, dayOfWeek, mToPosition;
     private Boolean mShouldScroll = false;
-    static public String academicYear = "2019-1";
+    private String academicYear = "2019-1";
     private List<Course> Mcourse;
     private Integer debugCount = 0;
     private int weekly;
