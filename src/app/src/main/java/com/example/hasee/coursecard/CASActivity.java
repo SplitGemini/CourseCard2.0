@@ -40,8 +40,14 @@ public class CASActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true); //支持通过JS打开新窗口
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
-        webView.loadUrl("https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login");
+
+        //这个登录界面还能用，但是api已经失效了所以登录了也没用
+        //webView.loadUrl("https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login");
+        webView.loadUrl("https://raw.githubusercontent.com/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/Description.md");
         webView.setWebChromeClient(new WebChromeClient());
+
+        //api is deprecated
+        //webView.setWebViewClient(new MyWebViewClient(CASActivity.this));//覆盖访问
         webView.setWebViewClient(new MyWebViewClient(CASActivity.this));//覆盖访问
     }
 }

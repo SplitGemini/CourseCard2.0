@@ -2,19 +2,16 @@ package com.example.hasee.coursecard;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.ValueCallback;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.webkit.WebResourceRequest;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hasee.coursecard.database.CourseDatabase;
 import com.example.hasee.coursecard.database.DBCourse;
 
 import java.io.IOException;
@@ -33,7 +30,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -42,38 +38,23 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.functions.Action1;
 
-
-public class MyWebViewClient extends WebViewClient {
+public class MyWebViewClientToGithub extends WebViewClient {
     private Activity activity;
     private boolean hasLoaded = false;
     private List<DBCourse> courses1 = new ArrayList<>();
     private List<DBCourse> courses10 = new ArrayList<>();
     private List<DBCourse> courses11 = new ArrayList<>();
     private List<DBCourse> courses20 = new ArrayList<>();
-    public MyWebViewClient(Activity activity)
+    public MyWebViewClientToGithub(Activity activity)
     {
         //  this.textView =textView;
         this.activity =activity;
 
     }
 
-    /*  警告: [deprecation]
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        view.loadUrl(url);
-        return true;
-    }
-    */
-
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
         String urlStr = String.valueOf(request.getUrl());
-        /*
-        if(urlStr.indexOf("https://uems.sysu.edu.cn/jwxt/") != -1){
-            Log.d("web view","shouldOverrideUrlLoading but go uems.sysu.edu.cn/jwxt");
-            return false;
-        }
-
-         */
         view.loadUrl(urlStr);
         Log.d("web view","shouldOverrideUrlLoading: " + urlStr);
         return false;
@@ -84,31 +65,24 @@ public class MyWebViewClient extends WebViewClient {
         CookieManager cookieManager = CookieManager.getInstance();
         String CookieStr = cookieManager.getCookie(url);
         Common.cookie = CookieStr;
-        if(CookieStr != null)
-            if(CookieStr.contains("LYSESSIONID") && CookieStr.contains("user")) {
-                if(!hasLoaded){
-                    String[] weeklys = {"1,9","10","11,19","20"};
-                    for (String i: weeklys)
-                        Onclick4Data(i,Common.academic);
-                    hasLoaded = true;
-                }
-
-            }
-
+        if(!hasLoaded){
+            String[] weeklys = {"1,9","10","11,19","20"};
+            for (String i: weeklys)
+                Onclick4Data(i,Common.academic);
+            hasLoaded = true;
+        }
     }
 
 
     //githubapi接口
-    //该接口已废弃
-    //https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule?academicYear=2017-1&weekly=7
-
     public interface GitHubService {
-        @GET("/jwxt/student-status/student-info/student-no-schedule")
-        Observable<JsonRootBean> getRepo( @Query("weekly") String weekly, @Query("academicYear") String academic);
+        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week/{weekly/}.json")
+        Observable<JsonRootBean> getRepo(@Path("weekly") String weekly);
 
-        @GET("/jwxt/student-status/student-info/student-no-schedule")
-        Call<JsonRootBean> getRepo1(@Query("weekly") String weekly, @Query("academicYear") String academic);
+        @GET("/SplitGemini/Coursecard2.0/master/dashboard/new_content/sample/sample_2018-1_week/{weekly/}.json")
+        Call<JsonRootBean> getRepo1(@Path("weekly") String weekly);
     }
+
     private String[] InfoConvert(String tmp_str) {
         String[] temp = new String[3];
         int cnt = 0;
@@ -130,32 +104,31 @@ public class MyWebViewClient extends WebViewClient {
 
     // 获取json转换DBcourse插入数据库
     public void Onclick4Data(final String weekly, final String academic) {
-    //https://raw.githubusercontent.com/Gongzq5/TEST/master/no-schedule_academicYear=2018-1_weekly=9
         final String[] week = weekly.split(",");
         OkHttpClient build = new OkHttpClient.Builder()
                 .connectTimeout(3, TimeUnit.SECONDS)
                 .readTimeout(3, TimeUnit.SECONDS)
                 .writeTimeout(3, TimeUnit.SECONDS)
-                .addInterceptor(new AddCookiesInterceptor(activity))
+                .addInterceptor(new MyWebViewClientToGithub.AddCookiesInterceptor(activity))
                 .build();
 
         final Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://uems.sysu.edu.cn")
+                .baseUrl("https://raw.githubusercontent.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(build)
                 .build();
 
 
-        GitHubService gitHubService = retrofit.create(GitHubService.class);
-        Observable<JsonRootBean> observable = gitHubService.getRepo(week[0],academic);
-        Call<JsonRootBean> call = gitHubService.getRepo1(week[0], academic);
+        MyWebViewClientToGithub.GitHubService gitHubService = retrofit.create(MyWebViewClientToGithub.GitHubService.class);
+        Observable<JsonRootBean> observable = gitHubService.getRepo(week[0]);
+        Call<JsonRootBean> call = gitHubService.getRepo1(week[0]);
 
         Log.i("Onclick4Data: ", call.request().url().toString());
 
         observable.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<JsonRootBean>() {
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<JsonRootBean>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         Log.d("HTTPx","onSubscribe");
@@ -175,26 +148,26 @@ public class MyWebViewClient extends WebViewClient {
                             Log.d("data info",week[0]+" :"+
                                     data.getFriday()+data.getMonday()+data.getThursday()+data.getTuesday()+data.getWednesday()+data.getSection());
 
-                                if (!data.getMonday().equals("null") && data.getSection() % 2 != 0) {
-                                    String[] temp = InfoConvert(data.getMonday());
-                                    courses(index).add(new DBCourse(academic, "星期一", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
-                                }
-                                if (!data.getTuesday().equals("null") && data.getSection() % 2 > 0) {
-                                    String[] temp = InfoConvert(data.getTuesday());
-                                    courses(index).add(new DBCourse(academic, "星期二", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
-                                }
-                                if (!data.getWednesday().equals("null") && data.getSection() % 2 > 0) {
-                                    String[] temp = InfoConvert(data.getWednesday());
-                                    courses(index).add(new DBCourse(academic, "星期三", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
-                                }
-                                if (!data.getThursday().equals("null") && data.getSection() % 2 > 0) {
-                                    String[] temp = InfoConvert(data.getThursday());
-                                    courses(index).add(new DBCourse(academic, "星期四", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
-                                }
-                                if (!data.getFriday().equals("null") && data.getSection() % 2 > 0) {
-                                    String[] temp = InfoConvert(data.getFriday());
-                                    courses(index).add(new DBCourse(academic, "星期五", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
-                                }
+                            if (!data.getMonday().equals("null") && data.getSection() % 2 != 0) {
+                                String[] temp = InfoConvert(data.getMonday());
+                                courses(index).add(new DBCourse(academic, "星期一", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
+                            }
+                            if (!data.getTuesday().equals("null") && data.getSection() % 2 > 0) {
+                                String[] temp = InfoConvert(data.getTuesday());
+                                courses(index).add(new DBCourse(academic, "星期二", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
+                            }
+                            if (!data.getWednesday().equals("null") && data.getSection() % 2 > 0) {
+                                String[] temp = InfoConvert(data.getWednesday());
+                                courses(index).add(new DBCourse(academic, "星期三", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
+                            }
+                            if (!data.getThursday().equals("null") && data.getSection() % 2 > 0) {
+                                String[] temp = InfoConvert(data.getThursday());
+                                courses(index).add(new DBCourse(academic, "星期四", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
+                            }
+                            if (!data.getFriday().equals("null") && data.getSection() % 2 > 0) {
+                                String[] temp = InfoConvert(data.getFriday());
+                                courses(index).add(new DBCourse(academic, "星期五", temp[0], temp[1], temp[2], (data.getSection() + 1) / 2, index));
+                            }
 
                         }
                         Log.d("on next","weekly: "+ weekly +" ,courses number :"+ courses(index).size());
@@ -242,6 +215,8 @@ public class MyWebViewClient extends WebViewClient {
         else if(index == 20) return courses20;
         else return null;
     }
+
+
 
     public class AddCookiesInterceptor implements Interceptor {
         private Context context;

@@ -1,6 +1,6 @@
 <div align=center><img width = '550' height ='550' src ="img/icon.png"/></div>
 
-<center><font size="60">Course Card</font></center>
+<div align=center><font size="60">Course Card</font></div>
 
 ## 应用简介
 
@@ -10,22 +10,35 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 因为超级课程表现在无法导入中大课程表，所以许多同学只能手动编辑课程信息，非常不方便。我们以此为出发点，设计了一款中大课程表应用——Course Card。我们通过中央身份验证服务获取cookie，再到中大教务系统获取课程表数据。在整个过程中，我们并不获取用户的NetID和密码，因此是非常安全的。而应用中的课程列表采用了卡片的形式，这正是应用名字的由来。
 
 ## 使用说明
-用户首次打开应用时，课程列表为空，点击左上角的列表按钮跳转到学期列表界面。点击下方的添加按钮，弹出学期菜单，选择学期后添加到学期列表。
+用户首次打开应用时，课程列表为空，点击左上角的列表按钮弹出菜单选择对应按钮，跳转到学期列表界面。点击下方的添加按钮，弹出学期菜单，选择学期后添加到学期列表。
 <div align="center">
-<img src="img/1.png" width="180"/><img src="img/2.png" width="180"/><img src="img/3.png" width="180" /><img src="img/4.png" width="180" />
+<img src="img/1.png" width="180"/><img src="img/1.1.png" width="180"/><img src="img/2.png" width="180"/><img src="img/3.png" width="180" /><img src="img/4.png" width="180" />
 </div>
 
-点击添加的学期，跳转到中央身份验证服务页面，输入NetID和密码，如果身份 
-验证成功就能获取该学期课程信息。再次点击该学期，跳转到课程列表，显示一周之内的课程信息，上下滑动查看，当前日期始终悬浮在顶部。点击右上角下拉菜单，选择周数并跳转。
+点击添加的学期，跳转到中央身份验证服务页面，输入NetID和密码，如果身份验证成功就能获取该学期课程信息。再次点击该学期，跳转到课程列表，显示一周之内的课程信息，上下滑动查看，当前日期始终悬浮在顶部。点击右上角下拉菜单，选择周数并跳转。
 
 <div align="center">
 <img src="img/5.png" width="180"/><img src="img/6.png" width="180"/><img src="img/7.png" width="180" /><img src="img/8.png" width="180" />
 </div>
+
+长按对应的学期可选择删除该该学期课程
+
+<div align="center">
+<img src="img/16.png" width="180"/>
+</div>
+
 点击课程可以查看详细信息，点击横线编辑备注，写好备注之后点击空白区域完成更新。只要该课程添加了备注，在任意一周都可以查看到备注信息。退出应用再次打开时，会自动跳转到当天对应的日期，并在通知栏显示课程提醒。
 
 <div align="center">
 <img src="img/9.png" width="180"/><img src="img/10.png" width="180"/><img src="img/11.png" width="180" /><img src="img/12.png" width="180" />
 </div>
+
+长按课程可以修改信息，修改后自动保存，修改依据是根据课程id修改，可修改所有内容，只有在不包括笔记的所有内容有一门完全相同课程时修改不成功
+
+<div align="center">
+<img src="img/17.png" width="180"/>
+</div>
+
 最后，用户进入课程信息界面时，有机会见到不同的冈布奥。
 
 <div align="center">
@@ -44,6 +57,8 @@ Course Card是一款课程表应用。用户可以通过中大教务系统导入
 使用WebView显示中央身份验证服务页面：[在这](https://cas.sysu.edu.cn/cas/login?service=https%3A%2F%2Fuems.sysu.edu.cn%2Fjwxt%2Fapi%2Fsso%2Fcas%2Flogin%3Fpattern%3Dstudent-login)
 
 身份验证成功可以得到cookie，在请求头中添加cookie后，向中大教务系统请求课程数据：[在这](https://uems.sysu.edu.cn/jwxt/student-status/student-info/student-no-schedule)
+
+因为中大教务系统网站更新，该api已在12月1日失效
 
 ### 数据库
 数据库建立Course表和Note表，分别存储课程信息和备注信息。

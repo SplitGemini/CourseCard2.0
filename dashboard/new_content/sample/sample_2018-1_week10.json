@@ -1,0 +1,12 @@
+{
+	"code": 200,
+	"data": [{
+		"tuesday": "编译原理,常会友,教学大楼B栋东B102",
+		"section": 5,
+		"weekly": 10
+	}, {
+		"tuesday": "编译原理,常会友,教学大楼B栋东B102",
+		"section": 6,
+		"weekly": 10
+	}]
+}
