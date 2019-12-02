@@ -7,7 +7,7 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "Notes",
-        indices = {@Index(value = {"courseName","notes"}, unique = false)},
+        indices = {@Index(value = {"id", "courseName","notes"})},
         foreignKeys = @ForeignKey(entity = DBCourse.class,parentColumns = "id",childColumns = "id" ,onDelete = ForeignKey.CASCADE)
         )
 public class Notes {

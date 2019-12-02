@@ -219,7 +219,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         if(position == 1) return 10;
         if(position == 2) return 11;
         if(position == 3) return 20;
-        return 0;
+        return 1;
     }
 
     private String timeToString(int time){
@@ -255,7 +255,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         for (int i = 0; i < 5; ++i) {
             data.add(weekList.get(i));
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.info_spinner_text, data);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         time_weekday.setAdapter(arrayAdapter);
         time_weekday.setClickable(true);
@@ -263,6 +263,7 @@ public class InfoActivityEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dbCourse.setWeekday(weekList.get(position));
+                Log.d("info edit",dbCourse.getName() + "设置星期几为"+weekList.get(position));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -273,7 +274,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         for (int i = 1; i <= 6; ++i) {
             data.add(timeToString(i));
         }
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.info_spinner_text, data);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         time_time.setAdapter(arrayAdapter);
         time_time.setClickable(true);
@@ -281,6 +282,7 @@ public class InfoActivityEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dbCourse.setTime(position + 1);
+                Log.d("info edit",dbCourse.getName() + "设置时间为"+timeToString(position + 1));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -292,7 +294,7 @@ public class InfoActivityEdit extends AppCompatActivity {
         for (int i = 0; i <= 3; ++i) {
             data.add(tmp[i]);
         }
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.spinner_text, data);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.info_spinner_text, data);
         arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
         week.setAdapter(arrayAdapter);
         week.setClickable(true);
@@ -300,6 +302,7 @@ public class InfoActivityEdit extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 dbCourse.setWeek(position2week(position));
+                Log.d("info edit",dbCourse.getName() + "移动到"+position2week(position));
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

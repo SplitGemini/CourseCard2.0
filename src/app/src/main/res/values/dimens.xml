@@ -20,7 +20,7 @@
     <dimen name="activity_info_week_font">24sp</dimen>
     <dimen name="activity_info_note_hint_font">24sp</dimen>
     <dimen name="activity_info_note_font">24sp</dimen>
-    <dimen name="activity_info_edit_name_font">20sp</dimen>
+    <dimen name="activity_info_edit_name_font">28sp</dimen>
     <dimen name="activity_info_edit_teacher_font">20sp</dimen>
     <dimen name="activity_info_edit_place_font">20sp</dimen>
     <dimen name="activity_info_edit_time_font">20sp</dimen>
@@ -33,16 +33,17 @@
     <dimen name="activity_info_iv_time_size">32dp</dimen>
     <dimen name="activity_info_iv_week_size">32dp</dimen>
     <dimen name="activity_info_iv_note_size">32dp</dimen>
-    <dimen name="activity_info_edit_iv_teacher_size">45dp</dimen>
-    <dimen name="activity_info_edit_iv_place_size">45dp</dimen>
-    <dimen name="activity_info_edit_iv_time_size">45dp</dimen>
-    <dimen name="activity_info_edit_iv_week_size">45dp</dimen>
-    <dimen name="activity_info_edit_iv_note_size">45dp</dimen>
+    <dimen name="activity_info_edit_iv_teacher_size">42dp</dimen>
+    <dimen name="activity_info_edit_iv_place_size">42dp</dimen>
+    <dimen name="activity_info_edit_iv_time_size">32dp</dimen>
+    <dimen name="activity_info_edit_iv_week_size">32dp</dimen>
+    <dimen name="activity_info_edit_iv_note_size">32dp</dimen>
     <dimen name="activity_info_margin">20dp</dimen>
     <dimen name="activity_info_margin_small">10dp</dimen>
     <dimen name="activity_info_margin_big">40dp</dimen>
 
     <dimen name="spinner_font">24sp</dimen>
+    <dimen name="info_spinner_font">20sp</dimen>
     <dimen name="spinner_margin">10dp</dimen>
     <dimen name="activity_main_iv_back_margin">10dp</dimen>
     <dimen name="activity_main_iv_add_margin">10dp</dimen>

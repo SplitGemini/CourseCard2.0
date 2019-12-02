@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isEmptyCourses = false;
         // Toast
         setAcademicYear();
         courseDao = CourseDatabase.getInstance(this).getCourseDao();
@@ -340,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setSelection(weekly - 1);
         queryInfoFromDB4uiChange(DBWeekPosition(weekly - 1), academicYear);
-        if (isEmptyCourses)
+        if (!isEmptyCourses)
             NotificationInit(getItemPosition(dayOfWeek), getItemPosition(dayOfWeek + 1));
 
         else {
@@ -600,7 +601,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void smoothMoveToPosition(RecyclerView mRecyclerView, final int position) {
-        if (Mcourse.size() == 0) return;
+        if (Mcourse.size() == 0 || position < 0) return;
         // 第一个可见位置
         int firstItem = mRecyclerView.getChildLayoutPosition(mRecyclerView.getChildAt(0));
         // 最后一个可见位置

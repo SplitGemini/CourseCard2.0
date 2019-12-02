@@ -9,7 +9,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.content.Intent;
 
 @Entity(tableName = "COURSE",
-        indices = @Index(value = {"academicYear", "name", "teacher", "place", "weekday", "time", "week"}, unique = true))
+        indices = @Index(value = {"academicYear", "name", "teacher", "place", "weekday", "time", "week"}))
 public class DBCourse {
 
     @PrimaryKey(autoGenerate = true)

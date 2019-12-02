@@ -93,7 +93,8 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:textColor="@color/activity_info_time_font"
                 android:textSize="@dimen/activity_info_edit_time_font"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:background="@null"/>
 
             <Spinner
                 android:id="@+id/activity_info_edit_tv_time_time"
@@ -105,7 +106,8 @@
                 android:layout_marginStart="@dimen/activity_info_margin_small"
                 android:textColor="@color/activity_info_time_font"
                 android:textSize="@dimen/activity_info_edit_time_font"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:background="@null"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_week"
@@ -126,7 +128,8 @@
                 android:layout_marginLeft="@dimen/activity_info_margin_small"
                 android:textColor="@color/activity_info_week_font"
                 android:textSize="@dimen/activity_info_edit_week_font"
-                android:spinnerMode="dropdown"/>
+                android:spinnerMode="dropdown"
+                android:background="@null"/>
 
             <ImageView
                 android:id="@+id/activity_info_edit_iv_note"
