@@ -443,7 +443,9 @@ public class MainActivity extends AppCompatActivity {
         if (start > 0 && end <= 0)
             end = adapter.getItemCount();
         if (start == -1) {
-            message = "周末不如去图书馆看看";
+            if(dayOfWeek == 1 || dayOfWeek == 7)
+                message = "周末不如去图书馆看看";
+            else message = "今天无剩余课程";
         } else {
             for (int i = start + 1; i < end; i++) {
                 Course course = adapter.getItem(i);
