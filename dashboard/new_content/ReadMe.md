@@ -43,7 +43,7 @@
 
 ### 贡献
 
-贡献，SplitGemini，还有经过后面的几次commits，略有变动，但是变动不大
+贡献，SplitGemini，还有经过后面的几次commits，略有变动，但是变动不大，最新的变化长图见最下面
 
 ![](img/contribute.png)
 
@@ -51,7 +51,7 @@
 
 ![](img/change.png)
 
-3182 additions
+对比原分支，3182 additions
 
 ![](img/diff.png)
 
@@ -62,3 +62,15 @@
 就算不能自动获取课程表也能手动添加与删除，仍保留一定功能，而之前的版本就没有这个功能
 
 如果想修改api，修改CASActivity->loadUrl来访问主页，CASActivity->setWebViewClient到MyWebViewClient，然后在MyWebViewClient->GithubService and MyWebViewClient->OnClick4Data里修改对应api
+
+
+### details
+
+变化详情长图
+
+![](img/screencapture-github-sysu-coursecard-Coursecard2-0-compare-master-SplitGemini-master-2019-12-12-18_34_43-1.png)
+
+![](img/screencapture-github-sysu-coursecard-Coursecard2-0-compare-master-SplitGemini-master-2019-12-12-18_34_43-2.png)
+
+![](img/screencapture-github-sysu-coursecard-Coursecard2-0-compare-master-SplitGemini-master-2019-12-12-18_34_43-3.png)
+
